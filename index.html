@@ -1,0 +1,147 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+    <title>Phaser - Making your Gamygdala - based emotional game</title>
+	
+</head>
+<body>
+
+<h2>Gamygdala</h2>
+This is the Gamygdala homepage. Click <a href=gamygdala_demo.html>here</a> for an example game running.<br>
+Gamygdala is an emotion engine for games. We currently distribute a javascript version, as well as two Phaser Plugins and an example building on level 9 of the Phaser tutorial (so do that one first to get to know Phaser).
+Gamygdala is based on the following publication, so please refer to it when you use it or find it useful:<br>
+<br>
+<a href="http://www.joostbroekens.com/files/Popescu_Broekens_Someren_2013.pdf">GAMYGDALA: an Emotion Engine for Games</a> Alexandru Popescu, Joost Broekens, and Maarten van Someren (2014). IEEE Transactions on Affective Computing, 5(1), 32-44<br/>
+<br>
+Currently this website only includes info on how to use gamygdala.<br>
+See the running example, and see the js code withtin. <br>
+See the GitHub project called gamygdala.<br>
+Will be updated soon.<br>
+<br>
+Cheers, <br>
+Joost Broekens, TU Delft<br>
+<br><br>
+<h2>Gamygdala usage in Phaser example</h2>
+Here we come to the emotion part. This explains the use of the Gamygdala emotion engine.<br>
+Note that the plugin part is Phaser specific, and not needed if you don't use phaser.<br>
+<br>
+First create the main emotion engine (using the Phaser plugin wrapper class, but this can be done directly too, see below).<br>
+The engine is needed to interpret how events (Belief in Gamygdala terms) relate to goals resulting in emotions.<br>
+The following three lines create one instance of Gamygdala that is used by all emotionAgents, and registers this as a Phaser plugin.<br>
+<br>
+<b style='font-family:courier'>
+gamygdalaPlugin=new Phaser.Plugin.GamygdalaWrapper();//create the Phaser plugin.<br>
+game.plugins.add(gamygdalaPlugin);//add the plugin to the game, as required by Phaser<br>
+emotionEngine=gamygdalaPlugin.getGamygdala(); //this gives you a ref to the actual underlying emotion engine, so that you can do what you need to do.<br>
+</b>
+<br>
+If you don't need emotional decay (the fact that emotions decay,i.e., if a guy is angry he will slowly become less angry) to be managed by the Phaser plugin engine, then you don't need to do all this, instead you can do the following:<br>
+<br>
+<b style='font-family:courier'>
+emotionEngine=new TUDelft.Gamygdala(); //this simply creates an emotion engine without plugin support.
+</b><br>
+<br>
+From now on we can do everything we need with the emotionEngine object reference, as this is an object of type Gamygdala<br>
+We create a new agent that represents the players emotional state. The method createAgent makes a new Agent, and registers it with gamygdala, and returns a ref to the agent.<br>
+We store the ref in the Phaser player object for later convenience.<br>
+<br>
+<b style='font-family:courier'>
+player.emotionAgent=emotionEngine.createAgent('player');<br>
+</b>
+<br>
+Now let's give the player some goals: survival and winning are both good, but survival is better.<br>
+<br>
+<b style='font-family:courier'>
+emotionEngine.createGoalForAgent('player','survive', 1);<br>
+emotionEngine.createGoalForAgent('player','win', 0.7);<br>
+</b>
+<br>
+Alternatively, you can do the necessary goal management yourself instead of having gamygdala do it for you with the create method.<br>
+This involves creating the goals and adding them to the agent(s) that have these goals (there can be more owners of the same goal so you can create group goals), and registering the goal to gamygdala.<br>
+<br>
+<b style='font-family:courier'>
+player.emotionAgent.addGoal(new TUDelft.Gamygdala.Goal('survive', 1));<br>
+player.emotionAgent.addGoal(new TUDelft.Gamygdala.Goal('win', 0.7));<br>
+emotionEngine.registerGoal(player.emotionAgent.getGoalByName('survive'));<br>
+emotionEngine.registerGoal(player.emotionAgent.getGoalByName('win'));<br>
+</b>
+<br>
+Now we are basically done for the player's emotions, apart from the fact we want to see something, so we add expression to the player.<br>
+This is not really part of Gamygdala, just an easy and crude way of visualizing the emotions using Phaser<br>
+<br>
+<b style='font-family:courier'>
+game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, player, player.emotionAgent));<br>
+</b>
+<br>
+We are now done with setting up the player, but we want the monsters to be emotional guys too (to showcase relations NPC's can have with other NPC's or player agents)<br>
+<br>
+<b style='font-family:courier'>
+for (var i=0;i<bad_guys.countLiving();i++)<br>
+{   <br>
+&nbsp&nbsp //create the Gamygdala agent and store it in the bad_guy object for easy reference later, because when the player gets hit, we need to tell gamygdala who did it.<br>
+&nbsp&nbsp bad_guys.getAt(i).emotionAgent=emotionEngine.createAgent('monster'+i);<br>
+&nbsp&nbsp //add a relation between player and monster for fun, the first monster hates the player, the second one likes the player, the third hates, etc..<br>
+&nbsp&nbsp emotionEngine.createRelation('monster'+i, 'player',(i%2)*2-1);<br>
+&nbsp&nbsp //add expression to the bad guy so we see something<br>
+&nbsp&nbsp game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, bad_guys.getAt(i), bad_guys.getAt(i).emotionAgent));<br>
+&nbsp&nbsp //We don't need to set goals for these bad guys. In our setup they achieve nothing, just react to what happens with the player: feel pity, gloating, etc...<br>
+&nbsp&nbsp }<br>
+</b>
+<br>
+Finally we need to tell gamygdala to decay emotional states  over time (you don't stay angry, the intensity should go down right?)<br>
+There are three ways to do emotional decay:<br>
+1. Either you use Gamygdala as standalone module, not requiring Phaser.<br>
+   In this case , Gamygdala will manage the emotional decay itself, and you need to tell it to do so.<br>
+   In the following line, you tell Gamygdala that every 100 Millis it decays the emotional state of all agents (using the default exponential decay with a factor of 0.8 per second).<br>
+   <br>
+<b style='font-family:courier'>
+emotionEngine.startDecay(100);<br>
+</b>
+<br>
+2. You use the phaser plugin update to manage emotional decay, you should tell the plugin to do so using the next line.<br>
+<br>
+<b style='font-family:courier'>
+gamygdalaPlugin.phaserManagedDecay=true;<br>
+</b>
+<br>
+3. Finally, you can choose to call emotionEngine.decayAll() yourself when you need it.<br>
+   This is usefull if you have a lot of agents and need to be efficient, or, if some agents dont need decay at all, or you want to write your own timing routines<br>
+   In such a case you need to manage decay yourself using the desired timing, so you have to manage the interval yourself.<br>
+<br>
+Should you want, you can set the type (exponential or linear) and speed of decay [0..1], for example with a faster exp decay speed using:<br>
+<br>
+<b style='font-family:courier'>
+emotionEngine.setDecay(0.4, emotionEngine.exponentialDecay);<br>
+</b>
+<br>
+Now you need to calibrate the overall emotional intensity. This is more an art than a science.<br>
+If you notice the emotional intensities are too low in general, you set the gain higher, otherwise you set it lower. Gain must be between 0 and 20<br>
+How gain works can be seen in the Agent.getEmotionalState();<br>
+Normally, you decide the gain for the whole game, but if you know that certain NPC's need a higher or lower one, you can set the gain for each NPC separately using Agent.setGain(gainFactor);<br>
+<br>
+<b style='font-family:courier'>
+emotionEngine.setGain(10);<br>
+</b>
+<br>
+If you want to enable debug output to the console, than uncomment the next line<br>
+<br>
+<b style='font-family:courier'>
+emotionEngine.debug=true;<br>
+</b>
+<br>
+Some notes: Gamygdala is very flexible. You can make use of it in many different ways, and this example is only one way. For example, the degree of agent specific emotion control is flexible.<br>
+<br>
+To name a few ways in which you can do this:<br>
+&nbsp&nbsp You can choose to run the engine for only those agents you know have received new beliefs (using Gamygdala.appraise(Belief, Agent), where Agent is the one for whom you appraise the belief)<br>
+&nbsp&nbsp Define a common goal for multiple agents so that they all react to beliefs that changes the goal likelyhood of being achieved.<br>
+&nbsp&nbsp You can define completely different dynamics for each agent, using different decayfunctions and decay factors<br>
+&nbsp&nbsp You can have only one "agent"  for all bad guys, e.g., an agent called "bad_guys", if you want them to be all bad, with the same relation. Then being hit simply results in an event caused by "bad_guys", and you can then use that same agent ref for all expressions for the bad guys.<br>
+Also notice that Gamygdala's classes use String references in the constructors, e.g., new Belief(likelihood, causalAgentName, affectedGoalNames, goalCongruences).<br>
+This is true for new Agent(name), new Goal(name, utility), new Relation(...) and newBelief(...). This makes is very is to script/config the emotional setup, because you can simply use string refs to the objects.<br>
+Also the Gamygdala.createAgent(..) and Gamygdala.createGoalForAgent(..) work with literal refs, so an alternative is to have a sequence of these be loaded from a txt file and executed.<br>
+<br>
+<br>
+
+</body>
+</html>
