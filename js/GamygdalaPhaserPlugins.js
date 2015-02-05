@@ -81,6 +81,8 @@ Phaser.Plugin.GamygdalaExpression = function (game, sprite, agent) {
 	this.EMOTION_TEXTURE_SIZE=256;
 	this.baseScale=this.EMOTION_MAX_SIZE/this.EMOTION_TEXTURE_SIZE;
 	
+	this.showOneOnly=false;
+	
 	this.expressions = [];
 	for (var i=0;i<16;i++)
 	{	this.expressions[i]=game.add.sprite(sprite.x+i*this.EMOTION_MAX_SIZE, sprite.y-50, 'emotions', i);
@@ -101,11 +103,14 @@ Phaser.Plugin.GamygdalaExpression.prototype.constructor = Phaser.Plugin.Gamygdal
 */
 Phaser.Plugin.GamygdalaExpression.prototype.update = function() {
 	var totalSize=0;
+	var max=0;
 	var emotionalState=this.agent.getEmotionalState(true);//get the emotional state WITH gain factor.
     for (var i=0;i<emotionalState.length;i++){
 		if (emotionalState[i].intensity>this.THRESHOLD){
 			totalSize+=emotionalState[i].intensity*this.EMOTION_MAX_SIZE;
 		}
+		if (emotionalState[i].intensity>max)
+			max=emotionalState[i].intensity;
 	}
 	for (var i=0;i<16;i++)
 	{	this.expressions[i].scale.x=0;
@@ -113,7 +118,7 @@ Phaser.Plugin.GamygdalaExpression.prototype.update = function() {
 	}
 	var sum=0;
 	for (var i=0;i<emotionalState.length;i++){
-		if (emotionalState[i].intensity>this.THRESHOLD){
+		if ((this.showOneOnly==true & emotionalState[i].intensity==max & emotionalState[i].intensity>this.THRESHOLD) | (this.showOneOnly==false & emotionalState[i].intensity>this.THRESHOLD)){
 			this.expressions[this.map[emotionalState[i].name]].scale.x=emotionalState[i].intensity*this.baseScale;
 			this.expressions[this.map[emotionalState[i].name]].scale.y=emotionalState[i].intensity*this.baseScale;
 			this.expressions[this.map[emotionalState[i].name]].x=sum-totalSize/2+this.sprite.body.x+this.sprite.width/2;

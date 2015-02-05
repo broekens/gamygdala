@@ -47,7 +47,7 @@ var scoreText;
 
 var hitTimer=0;
 var NR_OF_STARS=10;
-var NR_OF_BAD_GUYS=2;
+var NR_OF_BAD_GUYS=6;
 
 
 //For the Gamygdala based emotions: define the main appraisal engine reference
@@ -76,11 +76,15 @@ function create() {
     //  This stops it from falling away when you jump on it
     ground.body.immovable = true;
 
-    //  Now let's create two ledges
-    var ledge = platforms.create(400, 350, 'ground');
+    //  Now let's create three ledges
+    var ledge = platforms.create(400, 370, 'ground');
     ledge.body.immovable = true;
 
-    ledge = platforms.create(-150, 250, 'ground');
+    
+	ledge = platforms.create(400, 180, 'ground');
+    ledge.body.immovable = true;
+	
+	ledge = platforms.create(-150, 250, 'ground');
     ledge.body.immovable = true;
 
     // The player and its settings
@@ -104,9 +108,9 @@ function create() {
 	bad_guys.enableBody = true;
 	game.physics.arcade.enable(bad_guys);
 	for (var i=0;i<NR_OF_BAD_GUYS;i++){
-		var bad_guy= bad_guys.create(400+i*100, game.world.height - 300, 'badguy');
+		var bad_guy= bad_guys.create(100+i*(game.world.width-100)/NR_OF_BAD_GUYS, Math.random()*(game.world.height-150), 'badguy');
 		
-		bad_guy.body.bounce.y = 0.2*i+0.2;
+		bad_guy.body.bounce.y =  0.7 + Math.random() * 0.2;
 		bad_guy.body.gravity.y = 300;
 		bad_guy.body.collideWorldBounds = true;
 		
@@ -124,7 +128,7 @@ function create() {
     for (var i = 0; i < NR_OF_STARS; i++)
     {
         //  Create a star inside of the 'stars' group
-        var star = stars.create(i * 800/NR_OF_STARS, 0, 'star');
+        var star = stars.create(100+i * (game.world.width-100)/NR_OF_STARS,  Math.random()*(game.world.height-150), 'star');
 
         //  Let gravity do its thing
         star.body.gravity.y = 300;
@@ -165,8 +169,8 @@ function create() {
 	player.emotionAgent=emotionEngine.createAgent('player');
 	
 	//give the player some goals: survival and winning are both good, but survival is better.
-	emotionEngine.createGoalForAgent('player','survive', 1);
-	emotionEngine.createGoalForAgent('player','win', 0.7);
+	//emotionEngine.createGoalForAgent('player','survive', 1);
+	emotionEngine.createGoalForAgent('player','win', 1);
 	//Alternatively, you can do the necessary goal magamenet yourself instead of having gamygdala do it for you with the create method.
 	//This involves creating the goals and adding them to the agent(s) that have these goals (there can be more owners of the same goal so you can create group goals), and registering the goal to gamygdala.
 	//player.emotionAgent.addGoal(new TUDelft.Gamygdala.Goal('survive', 1));
@@ -176,7 +180,7 @@ function create() {
 	
 	//Now we are basically done for the player's emotions, apart from the fact we want to see something, so we add expression to the player.
 	//This is not really part of Gamygdala, just an easy and crude way of visualizing the emotions using Phaser
-	game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, player, player.emotionAgent));
+	//game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, player, player.emotionAgent));
 	
 	//We are now done with setting up the player, but we want the monsters to be emotional guys too (to showcase relations NPC's can have with other NPC's or player agents)
 	for (var i=0;i<bad_guys.countLiving();i++)
@@ -185,7 +189,10 @@ function create() {
 		//add a relation between player and monster for fun, the first monster hates the player, the second one likes the player, the third hates, etc..
 		emotionEngine.createRelation('monster'+i, 'player',(i%2)*2-1);
 		//add expression to the bad guy so we see something
-		game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, bad_guys.getAt(i), bad_guys.getAt(i).emotionAgent));
+		tempPlugin=new Phaser.Plugin.GamygdalaExpression(game, bad_guys.getAt(i), bad_guys.getAt(i).emotionAgent);
+		tempPlugin.showOneOnly=true;
+		game.plugins.add(tempPlugin);
+		
 		//note that we don't need to configure goals for these bad guys. They don't need to want to achieve something themselves to have social emotions, they can still feel pity, gloating, etc.. simply due to what happens to the player.
 	}
 	//Finally we need to tell gamygdala to decay emotional states  over time (you don't stay angry, the intensity should go down right?)
@@ -201,13 +208,13 @@ function create() {
 	//   In such a case you need to manage decay yourself using the desired timing, so you have to manage the interval yourself.
 	
 	//Alternatively, you can set the type (exponential or linear) and speed of decay [0..1], for example with a faster exp decay speed using:
-	//emotionEngine.setDecay(0.4, emotionEngine.exponentialDecay);
+	emotionEngine.setDecay(0.6, emotionEngine.exponentialDecay);
 	
 	//Now you need to calibrate the overall emotional intensity. This is more an art than a science.
 	//If you notive the emotional intensities are too low in general, you set the gain higher, otherwise you set it lower. Gain must be between 0 and 20
 	//How gain works can be seen in the Agent.getEmotionalState();
 	//Normally, you decide the gain for the whole game, but if you know that certain NPC's need a higher or lower one, you can set the gain for each NPC separately using Agent.setGain(gainFactor);
-	emotionEngine.setGain(10);
+	emotionEngine.setGain(20);
 	
 	//If you want to enable debug output to the console, than uncomment the next line
 	//emotionEngine.debug=true;
@@ -264,26 +271,32 @@ function update() {
 		//  Allow the player to jump if they are touching the ground.
 		if (cursors.up.isDown && player.body.touching.down)
 		{
-			player.body.velocity.y = -350;
+			player.body.velocity.y = -240;
+		}
+		if (cursors.up.isDown)
+		{
+			player.body.y -= 1.5;
 		}
 	} else
 		hitTimer--;
 	//control the bad guys
 	for (var i=0;i<bad_guys.countLiving();i++){
 		var bad_guy=bad_guys.getAt(i);
-		var speed=50+10*i;
-		if (player.body.x+1 < bad_guy.body.x)
-		{ 	bad_guy.body.velocity.x=-speed;
-			bad_guy.animations.play('left');
-		} else	if (player.body.x-1 > bad_guy.body.x)
-		{ 	bad_guy.body.velocity.x=speed;
-			bad_guy.animations.play('right');
-		} else if (bad_guy.body.touching.down)
-		{	bad_guy.body.velocity.x=0;
-			bad_guy.body.velocity.y=-speed*3;
-			bad_guy.animations.stop();
-		}
-		
+		var speed=20+5*i;
+		if (player.body.y<bad_guy.body.y && player.body.y+20>bad_guy.body.y){
+			if (player.body.x+1 < bad_guy.body.x)
+			{ 	bad_guy.body.velocity.x=-speed;
+				bad_guy.animations.play('left');
+			} else	if (player.body.x-1 > bad_guy.body.x)
+			{ 	bad_guy.body.velocity.x=speed;
+				bad_guy.animations.play('right');
+			} else if (bad_guy.body.touching.down)
+			{	bad_guy.body.velocity.x=0;
+				bad_guy.body.velocity.y=-speed*3;
+				bad_guy.animations.stop();
+			}
+		} else
+			bad_guy.body.velocity.x=0;
 	}
 		
 }
@@ -296,6 +309,11 @@ function collectStar (player, star) {
     //  Add and update the score
     score += 1;
     scoreText.text = 'Score: ' + score; 
+	
+	for (var i=0;i<bad_guys.countLiving();i++)
+	{	//reconfigure the relation after each star
+		emotionEngine.createRelation('monster'+i, 'player',Math.random()*2-1);
+	}
 	
 	//Add Emotion event, and simply call the main Gamygdala instance and ask it to appraise the event for all agent's it knows. 
 	//in our case, eating a star is good for the agent's goal of winning
@@ -313,7 +331,7 @@ function collectStar (player, star) {
 function hit (player, bad_guy) {
     
     
-	if (hitTimer<=0){
+	if (hitTimer<=0 && bad_guy.emotionAgent.getRelation('player').like<0){
 		//  Add and update lives
 		
 		lifes.getFirstAlive().kill();
@@ -330,7 +348,7 @@ function hit (player, bad_guy) {
 		//in our case, being hit is bad for the player's goal of surviving the game.
 		//note that since each of our bad guys is a little different (some like the agent, some don't) we need to know which bad guy did it, 
 		//which is why we stored the emotionAgent in the Phaser object and use it's name to tell Gamygdala who caused the event.
-		emotionEngine.appraiseBelief(1,bad_guy.emotionAgent.name,['survive'],[-0.34*lifes.countDead()]);
+		//emotionEngine.appraiseBelief(1,bad_guy.emotionAgent.name,['survive'],[-0.34*lifes.countDead()]);
 		
 		//Alternatively you can appraise the belief solely from the player's perspective using the ref to the gamygdala agent you stored somewhere.
 		//This is equivalent in our case because we know that this event only affects goals the player owns.
@@ -344,5 +362,11 @@ function hit (player, bad_guy) {
 }
 
 </script>
+<h1>Friend or Foe</h1>
+Genre: Emotional Arcade Game<br>
+Goal: Collect all stars without loosing your three lives.<br>
+<br>
+Some monsters like you, others don't. Quickly observe how they feel for you when you eat their stars.<br>
+Beware though, some might change their mind about you when you steal their stars.<br> 
 </body>
 </html>
