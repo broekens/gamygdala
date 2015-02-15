@@ -298,14 +298,16 @@ function collectStar (player, star) {
     scoreText.text = 'Score: ' + score; 
 	
 	//Add Emotion event, and simply call the main Gamygdala instance and ask it to appraise the event for all agent's it knows. 
-	//in our case, eating a star is good for the agent's goal of winning
-	emotionEngine.appraiseBelief(1,'player',['win'],[score/10]);
+	//in our case, eating a star is incrementally good for the agent's goal of winning, so we add a little bit of certainty towards reaching the goal.
+	emotionEngine.appraiseBelief(1,'player',['win'],[0.02], true);
 	
 	//Alternatively you can appraise this belief solely from the player's perspective using the ref to the gamygdala agent you stored somewhere.
 	//This is equivalent in our case because we know that this event only affects goals the player owns.
 	//player.emotionAgent.appraise(new TUDelft.Gamygdala.Belief(1,'player',['win'],[score/10]));
 	
 	if (score==NR_OF_STARS){
+		//Now we know we achieved the goal completely, so we tell gamygdala that something happened that completely satisfies our goal (not incrementally, but absolutely, i.e., congruence and likelihood=1)
+		emotionEngine.appraiseBelief(1,'player',['win'],[1]);
 		game.paused=true;
 		game.add.text(300, 300, 'YOU WIN :-)', { fontSize: '32px', fill: '#000' });
 	}

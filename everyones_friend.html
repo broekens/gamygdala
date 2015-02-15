@@ -1,0 +1,265 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+    <title>Phaser - Making your first game, part 9</title>
+	<script type="text/javascript" src="js/phaser.min.js"></script>
+	<script type="text/javascript" src="js/Gamygdala.js"></script>
+	<script type="text/javascript" src="js/GamygdalaPhaserPlugins.js"></script>
+	<style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+function preload() {
+
+    game.load.image('grass', 'assets/Grass.png');
+	game.load.image('plank', 'assets/plank.png');
+	
+    game.load.image('star', 'assets/starmario.png');
+    game.load.image('firstprize', 'assets/medal1.png');
+    game.load.image('hero', 'assets/medal2.png');
+    game.load.image('trophy', 'assets/trophy.png');
+    game.load.image('diamond', 'assets/diamond.png');
+    
+	game.load.image('bowser', 'assets/Bowser.png');
+    game.load.image('luigi', 'assets/Luigi.png');
+    game.load.image('mario', 'assets/Mario.png');
+    game.load.image('mcqueen', 'assets/Mcqueen.png');
+    game.load.image('pacman', 'assets/Pacman.png');
+    game.load.image('ralph', 'assets/Ralph.png');
+    
+	//This line is needed for the Gamygdala.Expression plugin, if you make your own emotion expressions and effects, this is not needed.
+	game.load.spritesheet('emotions', 'assets/emotions.png', 256, 256);
+}
+var npcs, prizes;
+var prizeSelected;
+var ledges;
+
+//For the Gamygdala based emotions: define the main appraisal engine reference
+var emotionEngine;
+var starCount, diamondCount, heroCount, trophyCount, bonusCount;
+
+function create() {
+ //  We're going to be using physics, so enable the Arcade Physics system
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    //  A simple background for our game
+    game.add.sprite(0, 0, 'grass');
+	
+	
+	bowser=game.add.sprite(50, 300, 'bowser');
+	mario=game.add.sprite(250, 300, 'mario');
+	luigi=game.add.sprite(350, 300, 'luigi');
+	mcqueen=game.add.sprite(450, 300, 'mcqueen');
+	ralph=game.add.sprite(550, 300, 'ralph');
+	pacman=game.add.sprite(700, 300, 'pacman');
+
+	npcs=game.add.group();
+	npcs.add(bowser, true);
+	npcs.add(mario, true);
+	npcs.add(luigi, true);
+	npcs.add(mcqueen, true);
+	npcs.add(ralph, true);
+	npcs.add(pacman, true);
+	
+	game.physics.arcade.enable(npcs);
+	npcs.enableBody=true;
+	npcs.setAll('body.bounce.y', 0.2);
+	npcs.setAll('body.gravity.y', 300+Math.random()*100);
+	npcs.setAll('body.collideWorldBounds', true);
+	
+	star=game.add.sprite(300, 0, 'star');
+	firstprize=game.add.sprite(350, 0, 'firstprize');
+	hero=game.add.sprite(400, 0, 'hero');
+	trophy=game.add.sprite(450, 0, 'trophy');
+	diamond=game.add.sprite(500, 0, 'diamond');
+	
+	star.name='star';
+	firstprize.name='bonus';
+	hero.name='hero';
+	trophy.name='trophy';
+	diamond.name='diamond';
+	
+	prizes=game.add.group();
+	prizes.add(star, true);
+	prizes.add(firstprize, true);
+	prizes.add(hero, true);
+	prizes.add(trophy, true);
+	prizes.add(diamond, true);
+	
+	game.physics.arcade.enable(prizes);
+	prizes.enableBody=true;
+	prizes.setAll('body.bounce.y', 0.2);
+	prizes.setAll('body.gravity.y', 300+Math.random()*100);
+	prizes.setAll('body.collideWorldBounds', true);
+	
+	ledges=game.add.group();
+	ledges.enableBody = true;
+    ledge=ledges.create(300, 200, 'plank');
+	ledge.body.immovable=true;
+	
+	//create the emotions
+	plugin=new Phaser.Plugin.GamygdalaWrapper();
+	game.plugins.add(plugin);
+	emotionEngine=plugin.getGamygdala();
+	
+	mario.emotion=emotionEngine.createAgent('mario');
+	luigi.emotion=emotionEngine.createAgent('luigi');
+	pacman.emotion=emotionEngine.createAgent('pacman');
+	ralph.emotion=emotionEngine.createAgent('ralph');
+	mcqueen.emotion=emotionEngine.createAgent('mcqueen');
+	bowser.emotion=emotionEngine.createAgent('bowser');
+	
+	game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, mario, mario.emotion, true));
+	game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, luigi, luigi.emotion, true));
+	game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, pacman, pacman.emotion, true));
+	game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, ralph, ralph.emotion, true));
+	game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, mcqueen, mcqueen.emotion, true));
+	game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, bowser, bowser.emotion, true));
+	
+	npcs.setAll('emotion.expressionPlugin.visible', false);
+	
+	
+	emotionEngine.createGoalForAgent('bowser', 'winstarsb', 1);
+	emotionEngine.createGoalForAgent('mario', 'winstarsm', 1);
+	emotionEngine.createGoalForAgent('luigi', 'winstarsl', 1);
+	emotionEngine.createGoalForAgent('pacman', 'diamonds', 1);
+	emotionEngine.createGoalForAgent('ralph', 'hero', 1);
+	emotionEngine.createGoalForAgent('mcqueen', 'trophy', 1);
+
+	
+	emotionEngine.createGoalForAgent('mario', 'bonusmario', 0.6);
+	emotionEngine.createGoalForAgent('luigi', 'bonusluigi', 0.6);
+	emotionEngine.createGoalForAgent('pacman', 'bonuspacman', 0.6);
+	emotionEngine.createGoalForAgent('ralph', 'bonusralph', 0.6);
+	emotionEngine.createGoalForAgent('mcqueen', 'bonusmcqueen', 0.6);
+	emotionEngine.createGoalForAgent('bowser', 'bonusbowser', 0.6);
+	
+	emotionEngine.createRelation('mario', 'luigi' , .5);
+	emotionEngine.createRelation('luigi', 'mario' , .5);
+	
+	emotionEngine.createRelation('bowser', 'mario' , -0.5);
+	emotionEngine.createRelation('bowser', 'luigi' , -0.5);
+	
+	emotionEngine.createRelation('mcqueen', 'ralph' , -0.5);
+	
+	emotionEngine.createRelation('ralph', 'mcqueen' , -0.5);
+	emotionEngine.createRelation('ralph', 'mario' , -0.5);
+	emotionEngine.createRelation('ralph', 'luigi' , 0);
+	emotionEngine.createRelation('ralph', 'bowser' , 0.5);
+	emotionEngine.createRelation('ralph', 'pacman' , -0.5);
+	
+	emotionEngine.setGain(5);
+	starCount=3;
+	diamondCount=1;
+	heroCount=1;
+	trophyCount=1;
+	bonusCount=5;
+	
+	starText=game.add.text(320, 80, ''+starCount, { fontSize: '32px', fill: '#000' });
+	bonusText=game.add.text(370, 80, ''+bonusCount, { fontSize: '32px', fill: '#000' });
+	heroText=game.add.text(420, 80, ''+heroCount, { fontSize: '32px', fill: '#000' });
+	trophyText=game.add.text(470, 80, ''+trophyCount, { fontSize: '32px', fill: '#000' });
+	diamondText=game.add.text(520, 80, ''+diamondCount, { fontSize: '32px', fill: '#000' });
+	
+   }
+
+function update() {
+	game.physics.arcade.collide(ledges, prizes);
+	npcs.setAll('emotion.expressionPlugin.visible', false);
+	
+	
+	if (prizeSelected && game.input.mousePointer.isDown)
+		game.physics.arcade.getObjectsUnderPointer(game.input.mousePointer, npcs, givePrize);
+	if (game.input.mousePointer.isDown)
+		game.physics.arcade.getObjectsUnderPointer(game.input.mousePointer, prizes, selectPrize);
+	else
+		game.physics.arcade.getObjectsUnderPointer(game.input.mousePointer, npcs, showEmotion);
+		
+	if (prizeSelected && prizeSelected.body.touching.down){
+		prizeSelected.body.velocity.y=-70;
+	}
+}
+
+function selectPrize (pointer, prize) {
+    prizeSelected=prize;
+}
+
+function showEmotion(pointer, npc){
+	npc.emotion.expressionPlugin.visible=true;
+	
+}
+
+function givePrize (pointer, npc) {
+	if (prizeSelected.name=='star'){
+		
+		if (npc.emotion.name=='bowser'){
+			starCount--;
+			emotionEngine.appraiseBelief(1, null , ['winstarsb'], [1]);
+			emotionEngine.appraiseBelief(1, null , ['winstarsm','winstarsl'], [-0.2, -0.2], true);//incremental
+		}
+		if (npc.emotion.name=='mario' & prizeSelected.name=='star'){
+			starCount--;
+			emotionEngine.appraiseBelief(1, null , ['winstarsm'], [1]);
+			emotionEngine.appraiseBelief(1, null , ['winstarsb','winstarsl'], [-0.2, -0.2], true);//incremental
+		}
+		if (npc.emotion.name=='luigi' & prizeSelected.name=='star'){
+			starCount--;
+			emotionEngine.appraiseBelief(1, null , ['winstarsl'], [1]);
+			emotionEngine.appraiseBelief(1, null , ['winstarsm','winstarsb'], [-0.2, -0.2], true);//incremental
+		}
+		if (starCount<=0)
+				prizeSelected.kill();
+	}
+	if (npc.emotion.name=='pacman'  & prizeSelected.name=='diamond'){
+		diamondCount--;
+		emotionEngine.appraiseBelief(1, null , ['diamonds'], [1]);
+		if (diamondCount<=0)
+			prizeSelected.kill();
+	}
+	if (npc.emotion.name=='ralph'  & prizeSelected.name=='hero'){
+		heroCount--
+		emotionEngine.appraiseBelief(1, null , ['hero'], [1]);
+		if (heroCount<=0)
+			prizeSelected.kill();
+	}
+	if (npc.emotion.name=='mcqueen'  & prizeSelected.name=='trophy'){
+		trophyCount--;
+		emotionEngine.appraiseBelief(1, null , ['trophy'], [1]);
+		if (trophyCount<=0)
+			prizeSelected.kill();
+	}
+	if (prizeSelected.name=='bonus'){
+		bonusCount--;
+		emotionEngine.appraiseBelief(1, null , ['bonus'+npc.emotion.name], [1]);
+		if (bonusCount<=0)
+			prizeSelected.kill();
+	}
+    npc.body.velocity.y=-100;
+	prizeSelected=null;
+	
+	starText.text=''+(starCount>0?starCount:'');
+	diamondText.text=''+(diamondCount>0?diamondCount:'');
+	bonusText.text=''+(bonusCount>0?bonusCount:'');
+	trophyText.text=''+(trophyCount>0?trophyCount:'');
+	heroText.text=''+(heroCount>0?heroCount:'');
+}
+
+</script>
+<h1>Everyone's friend</h1>
+Genre: Emotional Puzzle Game<br>
+Goal: Make everyone as happy as possible. Happy looks like this:<br> <img width=100 height=100 src='assets/Happy.png'><br>
+
+<br>
+Everyone likes to receive special prizes. Try to find out who likes what by clicking on a prize and then on a character.<br>
+But beware, not everyone likes each other, so giving a prize to one might upset another.<br> 
+</body>
+</html>

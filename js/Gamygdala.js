@@ -41,14 +41,22 @@ TUDelft.Gamygdala.prototype.createAgent = function(agentName){
 * @param {String} - The agent's name to which the newly created goal has to be added.
 * @param {String} - The goal's name.
 * @param {double} - The goal's utility.
+* @param {boolean} - Defines if the goal is a maintenance goal or not [optional]. The default is that the goal is an achievement goal, i.e., a goal that once it's likelihood reaches true (1) or false (-1) stays that way.
 * @return {TUDelft.Gamygdala.Goal} - a goal reference to the newly created goal.
 */
-TUDelft.Gamygdala.prototype.createGoalForAgent = function(agentName, goalName, goalUtility){
+TUDelft.Gamygdala.prototype.createGoalForAgent = function(agentName, goalName, goalUtility, isMaintenanceGoal){
 	tempAgent=this.getAgentByName(agentName);
 	if (tempAgent){
-		tempGoal=new TUDelft.Gamygdala.Goal(goalName, goalUtility);
-		this.registerGoal(tempGoal);
+		tempGoal=this.getGoalByName(goalName);
+		if (tempGoal)
+			console.log("Warning: I cannot make a new goal with the same name "+goalName+" as one is registered already. I assume the goal is a common goal and will add the already known goal with that name to the agent "+agentName);
+		else {
+			tempGoal=new TUDelft.Gamygdala.Goal(goalName, goalUtility);
+			this.registerGoal(tempGoal);
+		}
 		tempAgent.addGoal(tempGoal);
+		if (isMaintenanceGoal)
+			tempGoal.isMaintenanceGoal=isMaintenanceGoal;
 		return tempGoal;
 	} else
 	{	console.log("Error: agent with name "+ agentName + " does not exist, so I cannot add a create a goal for it.");
@@ -81,13 +89,13 @@ TUDelft.Gamygdala.prototype.createRelation = function(sourceName, targetName, re
 * This method is thus handy if you want to keep all gamygdala logic internal to Gamygdala.
 * @method TUDelft.Gamygdala.appraiseBelief
 * @param {double} - The likelihood of this belief to be true.
-* @param {String} - The agent's name to which the newly created goal has to be added.
+* @param {String} - The agent's name of the causal agent of this belief.
 * @param {String[]} - The affected goals' names.
-* @param {double[]} - The affected goals' utilities.
-* @return {TUDelft.Gamygdala.Goal} - a goal reference to the newly created goal.
+* @param {double[]} - The affected goals' congruences.
+* @param {boolean} - [optional] Incremental evidence enforces gamygdala to use the likelihood as delta, i.e, it will add or subtract this belief's likelihood from the goal likelihood instead of using the belief as "state" defining the absolute likelihood
 */
-TUDelft.Gamygdala.prototype.appraiseBelief = function(likelihood, causalAgentName, affectedGoalNames, goalCongruences){
-	tempBelief=new TUDelft.Gamygdala.Belief(likelihood, causalAgentName, affectedGoalNames, goalCongruences);
+TUDelft.Gamygdala.prototype.appraiseBelief = function(likelihood, causalAgentName, affectedGoalNames, goalCongruences, isIncremental){
+	tempBelief=new TUDelft.Gamygdala.Belief(likelihood, causalAgentName, affectedGoalNames, goalCongruences, isIncremental);
 	this.appraise(tempBelief);
 }
 /**
@@ -169,7 +177,11 @@ TUDelft.Gamygdala.prototype.getAgentByName = function(agentName){
 * @param {TUDelft.Gamygdala.Goal} - the goal to be registered
 */
 TUDelft.Gamygdala.prototype.registerGoal = function(goal){
-    this.goals.push(goal);   
+	if (this.getGoalByName(goal.name)==null)
+		this.goals.push(goal);
+	else{
+		console.log("Warning: failed adding a second goal with the same name: "+goal.name);
+	}
 };
 
 /**
@@ -220,7 +232,7 @@ TUDelft.Gamygdala.prototype.appraise = function(belief, affectedAgent){
 			if (currentGoal!=null){
 				//the goal exists, appraise it
 				var utility = currentGoal.utility;
-				var deltaLikelihood = this.calculateDeltaLikelihood(currentGoal, belief.goalCongruences[i], belief.likelihood);
+				var deltaLikelihood = this.calculateDeltaLikelihood(currentGoal, belief.goalCongruences[i], belief.likelihood, belief.isIncremental);
 				var desirability = belief.goalCongruences[i] * utility;
 				if (this.debug)
 					console.log('Evaluated goal: ' + currentGoal.name +'('+utility+', '+deltaLikelihood+')');
@@ -262,7 +274,7 @@ TUDelft.Gamygdala.prototype.appraise = function(belief, affectedAgent){
 			//Loop through every goal in the list of affected goals by this event.
 			var currentGoal=affectedAgent.getGoalByName(belief.affectedGoalNames[i]);
 			var utility = currentGoal.utility;
-			var deltaLikelihood = this.calculateDeltaLikelihood(currentGoal, belief.goalCongruences[i], belief.likelihood);
+			var deltaLikelihood = this.calculateDeltaLikelihood(currentGoal, belief.goalCongruences[i], belief.likelihood, belief.isIncremental);
 			var desirability = belief.goalCongruences[i] * utility;
 			
 			//assume affectedAgent is the only owner to be considered in this appraisal round.
@@ -315,11 +327,22 @@ TUDelft.Gamygdala.prototype.decayAll = function(){
 //Below this is internal gamygdala stuff not to be used publicly (i.e., never call these methods).
 ////////////////////////////////////////////////////////
 
-TUDelft.Gamygdala.prototype.calculateDeltaLikelihood = function(goal, congruence, likelihood){
+TUDelft.Gamygdala.prototype.calculateDeltaLikelihood = function(goal, congruence, likelihood, isIncremental){
 	//Defines the change in a goal's likelihood due to the congruence and likelihood of a current event.
-    var oldLikelihood = goal.likelihood; 
-    var newLikelihood = (congruence * likelihood + 1.0)/2.0;
-    goal.likelihood=newLikelihood;
+	//We cope with two types of beliefs: incremental and absolute beliefs. Incrementals have their likelihood added to the goal, absolute define the current likelihood of the goal
+	//And two types of goals: maintenance and achievement. If an achievement goal (the default) is -1 or 1, we can't change it any more (unless externally and explicitly by changing the goal.likelihood).
+	var oldLikelihood = goal.likelihood; 
+	var newLikelihood;
+	if (goal.isMaintenanceGoal==false && (oldLikelihood>=1 | oldLikelihood<=-1))
+		return 0;
+	if (isIncremental){
+		newLikelihood = oldLikelihood + likelihood*congruence;
+		newLikelihood=Math.max(Math.min(newLikelihood,1), -1);
+	}
+	else
+		newLikelihood = (congruence * likelihood + 1.0)/2.0;
+    
+	goal.likelihood=newLikelihood;
     if(oldLikelihood != null){
         return newLikelihood - oldLikelihood;     
     }else{
@@ -418,61 +441,63 @@ TUDelft.Gamygdala.prototype.evaluateSocialEmotion = function(utility, desirabili
 }
 
 TUDelft.Gamygdala.prototype.agentActions = function(affectedName, causalName, selfName, desirability, utility, deltaLikelihood){
-    //There are three cases here.
-    //The affected agent is SELF and causal agent is other.
-    //The affected agent is SELF and causal agent is SELF.
-    //The affected agent is OTHER and causal agent is SELF.
-    var emotion = new TUDelft.Gamygdala.Emotion(null,null);
-    var relation;
-    if(affectedName === selfName && selfName != causalName){
-        //Case one 
-        if(desirability >= 0){
-            emotion.name = 'gratitude';
-        }
-        else {
-            emotion.name = 'anger';  
-        }
-        emotion.intensity = Math.abs(utility * deltaLikelihood);
-		var self = this.getAgentByName(selfName);
-        if(self.hasRelationWith(causalName)){
-            relation = self.getRelation(causalName);          
-        }else{
-            self.updateRelation(causalName, 0.0);
-            relation = self.getRelation(causalName); 
-        }
-		relation.addEmotion(emotion);
-		self.updateEmotionalState(emotion);  //also add relation emotion the emotion to the emotional state
-    }
-    if(affectedName === selfName && selfName === causalName){
-        //Case two
-        //This case is not included in TUDelft.Gamygdala.
-    }
-    if(affectedName != selfName && causalName === selfName){
-        //Case three
-        relation;
-        if( this.getAgentByName(causalName).hasRelationWith(affectedName)){
-            relation = this.getAgentByName(causalName).getRelation(affectedName);   
-            if(desirability >= 0){
-                if(relation.like >= 0){
-                    emotion.name = 'gratification';
-                    emotion.intensity = Math.abs(utility * deltaLikelihood * relation.like);
-					relation.addEmotion(emotion);
-					this.getAgentByName(causalName).updateEmotionalState(emotion);  //also add relation emotion the emotion to the emotional state
-                }
-            }
-            else {
-                if(relation.like >= 0){
-                    emotion.name = 'remorse';  
-                    emotion.intensity = Math.abs(utility * deltaLikelihood * relation.like);
-					relation.addEmotion(emotion);
-					this.getAgentByName(causalName).updateEmotionalState(emotion);  //also add relation emotion the emotion to the emotional state
-                }
+	if (causalName!=null && causalName!=''){
+		//If the causal agent is null or empty, then we we assume the event was not caused by an agent.
+		//There are three cases here.
+		//The affected agent is SELF and causal agent is other.
+		//The affected agent is SELF and causal agent is SELF.
+		//The affected agent is OTHER and causal agent is SELF.
+		var emotion = new TUDelft.Gamygdala.Emotion(null,null);
+		var relation;
+		if(affectedName === selfName && selfName != causalName){
+			//Case one 
+			if(desirability >= 0){
+				emotion.name = 'gratitude';
+			}
+			else {
+				emotion.name = 'anger';  
+			}
+			emotion.intensity = Math.abs(utility * deltaLikelihood);
+			var self = this.getAgentByName(selfName);
+			if(self.hasRelationWith(causalName)){
+				relation = self.getRelation(causalName);          
+			}else{
+				self.updateRelation(causalName, 0.0);
+				relation = self.getRelation(causalName); 
+			}
+			relation.addEmotion(emotion);
+			self.updateEmotionalState(emotion);  //also add relation emotion the emotion to the emotional state
+		}
+		if(affectedName === selfName && selfName === causalName){
+			//Case two
+			//This case is not included in TUDelft.Gamygdala.
+		}
+		if(affectedName != selfName && causalName === selfName){
+			//Case three
+			relation;
+			if( this.getAgentByName(causalName).hasRelationWith(affectedName)){
+				relation = this.getAgentByName(causalName).getRelation(affectedName);   
+				if(desirability >= 0){
+					if(relation.like >= 0){
+						emotion.name = 'gratification';
+						emotion.intensity = Math.abs(utility * deltaLikelihood * relation.like);
+						relation.addEmotion(emotion);
+						this.getAgentByName(causalName).updateEmotionalState(emotion);  //also add relation emotion the emotion to the emotional state
+					}
+				}
+				else {
+					if(relation.like >= 0){
+						emotion.name = 'remorse';  
+						emotion.intensity = Math.abs(utility * deltaLikelihood * relation.like);
+						relation.addEmotion(emotion);
+						this.getAgentByName(causalName).updateEmotionalState(emotion);  //also add relation emotion the emotion to the emotional state
+					}
+					
+				}
 				
-            }
-			
-        }   
-    }
-	
+			}   
+		}
+	}
 }
 	
 //Decay functions available
@@ -725,9 +750,18 @@ TUDelft.Gamygdala.Relation.prototype.decay = function(gamygdalaInstance){
 /**
 * This class is a data structure to store one Belief for an agent
 * A belief is created and fed into a Gamygdala instance (method Gamygdala.appraise()) for evaluation
+* @param {double} - The likelihood of this belief to be true.
+* @param {String} - The agent's name of the causal agent of this belief.
+* @param {String[]} - The affected goals' names.
+* @param {double[]} - The affected goals' congruences.
+* @param {boolean} - [optional] Incremental evidence enforces gamygdala to use the likelihood as delta, i.e, it will add or subtract this belief's likelihood from the goal likelihood instead of using the belief as "state" defining the absolute likelihood
 */
-TUDelft.Gamygdala.Belief = function(likelihood, causalAgentName, affectedGoalNames, goalCongruences) {
-    this.likelihood = Math.min(1,Math.max(-1,likelihood));
+TUDelft.Gamygdala.Belief = function(likelihood, causalAgentName, affectedGoalNames, goalCongruences, isIncremental) {
+	if (isIncremental)
+		this.isIncremental=isIncremental;//incremental evidence enforces gamygdala to use the likelihood as delta, i.e, it will add or subtract this belief's likelihood from the goal likelihood instead of using the belief as "state" defining the absolute likelihood
+    else
+		this.isIncremental=false;
+	this.likelihood = Math.min(1,Math.max(-1,likelihood));
     this.causalAgentName = causalAgentName;
     this.affectedGoalNames = [];
     this.goalCongruences = [];
@@ -770,10 +804,17 @@ TUDelft.Gamygdala.Emotion = function (name, intensity) {
 /**
 * This class is mainly a data structure to store a goal with it's utility and likelihood of being achieved
 * This is used as basis for interpreting Beliefs
+* @param {String} - The name of the goal
+* @param {double} - The utility of the goal
+* @param {boolean} - [optional] Defines is the goal is a maintenance goal or not [optional]. The default is that the goal is an achievement goal, i.e., a goal that once it's likelihood reaches true (1) or false (-1) stays that way.
 */
-TUDelft.Gamygdala.Goal = function(name, utility){
+TUDelft.Gamygdala.Goal = function(name, utility, isMaintenanceGoal){
     this.name = name;
     this.utility = utility;
     this.likelihood = 0.5; //The likelihood is unknown at the start so it starts in the middle between disconfirmed (0) and confirmed (1)
+	if (isMaintenanceGoal)
+		this.maintenanceGoal=isMaintenanceGoal; //There are maintenance and achievement goals. When an achievement goal is reached (or not), this is definite (e.g., to a the promotion or not). A maintenance goal can become true/false indefinetly (e.g., to be well-fed)
+	else
+		this.isMaintenanceGoal=false;
 }
 
