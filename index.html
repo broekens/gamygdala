@@ -2,37 +2,63 @@
 <html lang="en"> 
 <head> 
 	<meta charset="UTF-8" />
-    <title>Phaser - Making your Gamygdala - based emotional game</title>
-	
+    <title>Phaser - Making your GAMYGDALA - based emotional game</title>
+	<style>
+	  body {background-color:white; font-family: "Arial";}
+	</style>
 </head>
 <body>
-
-<h2>Gamygdala</h2>
-This is the Gamygdala homepage. <br>
-Gamygdala is an emotion engine for games. We currently distribute a javascript version, as well as two <a href="http://www.photonstorm.com">Phaser</a> Plugins and an example building on level 9 of the Phaser tutorial (so do that one first to get to know Phaser).
-		Gamygdala is based on the following publication, so please refer to it when you use it or find it useful:<br>
-		<br>
-<a href="http://www.joostbroekens.com/files/Popescu_Broekens_Someren_2013.pdf">GAMYGDALA: an Emotion Engine for Games</a> Alexandru Popescu, Joost Broekens, and Maarten van Someren (2014). IEEE Transactions on Affective Computing, 5(1), 32-44<br/>
-<br>
-Currently this website only includes info on how to use gamygdala.<br>
+<table>
+<tr>
+	<td width='20%'>
+	</td>
+	<td align='center' width='60%'>
+	<br>
+	<br>
+	<img src='logo_gamygdala_small.png'>
+	<br>
+	<br>
+	<br>
+	</td>
+	<td width='20%'>
+	</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+Welcome to the the GAMYGDALA homepage! GAMYGDALA is an easy to use emotion engine for games. 
+It enables developers to simulate emotions in NPC's. GAMYGDALA can be used in a black-box game-AI independent manner.
+We currently distribute a javascript version of the GAMYGDALA engine. Further, we have developed two <a href="http://www.photonstorm.com">Phaser</a> Plugins and an example of how to use GAMYGDALA that builds upon level 9 of the Phaser tutorial (so do that one first to get to know Phaser).
+This website includes info on how to use GAMYGDALA, as well as links to several running example games based on the Phaser game engine.<br>
 To download locally all you need to start playing with it, as well as to contribute post requests and bugs, see the GitHub project called <a target=new href="http://github.com/broekens/gamygdala">gamygdala</a><br>
 <br>
-Gamygdala is released under the MIT license.<br>
+GAMYGDALA is released under the MIT license.<br>
 For questions, contact joost.broekens@gmail.com<br>
+GAMYGDALA is based on the following publication, so please refer to it when you use it or find it useful (or check it if you want to understand how it works in depth):<br>
 <br>
+<a href="http://www.joostbroekens.com/files/Popescu_Broekens_Someren_2013.pdf">GAMYGDALA: an Emotion Engine for Games</a> Alexandru Popescu, Joost Broekens, and Maarten van Someren (2014). IEEE Transactions on Affective Computing, 5(1), 32-44<br/>
+<br>
+Also check Alex's blog at <a href='http://www.gamygdala.com/'>www.gamygala.com </a><br>
+<br>
+
 Cheers, <br>
 Joost Broekens, TU Delft<br><h2>Example games</h2>
-<a href=gamygdala_demo.html>gamygdala_demo.html</a> is the running version of the fully commented example you can find on GitHub.<br>
 <a href=friend_or_foe.html>friend_or_foe.html</a> is an example of an "Emotional Arcade Game" where the bad guys' relations to you influences their behaviour.<br>
+Is contains assets from the Phaser tutorial, and copyrights are thus owned by others not me.<br>
+<br>
 <a href=everyones_friend.html>everyones_friend.html</a> is an example of an "Emotional Puzzle Game" where your goal is to make everyone happy by giving them the price they desire.<br>
-
+It contains copyrighted assets of others (e.g., Pixar, Nintendo), so please keep in mind that this is FOR EXAMPLE PURPOSES ONLY!!<br>
+<br>
 The gamygdala website and GitHub site will be updated soon to be better looking and to contain more examples.<br>
-
-<br><br>
-<h2>Gamygdala usage in Phaser example</h2>
-Here we come to the emotion part. This explains the use of the Gamygdala emotion engine.<br>
+<br>
+<h2>GAMYGDALA usage explained</h2>
+Here we come to the emotion part you've been waiting for. This explains the use of the GAMYGDALA emotion engine.<br>
+It is the textual explanation of the <a href=gamygdala_demo.html>gamygdala_demo.html</a> running example build on top of the Phaser tutorial level 9. You can find all code on GitHub.<br>
+If you are a more practically oriented, learn-while-you-are-doing kind of person, we advise you to get the code and simply go through this example in code, as it contains the same info.<br>
 Note that the plugin part is Phaser specific, and not needed if you don't use phaser.<br>
 <br>
+<h3>Let's start...</h3>
 First create the main emotion engine (using the Phaser plugin wrapper class, but this can be done directly too, see below).<br>
 The engine is needed to interpret how events (Belief in Gamygdala terms) relate to goals resulting in emotions.<br>
 The following three lines create one instance of Gamygdala that is used by all emotionAgents, and registers this as a Phaser plugin.<br>
@@ -137,18 +163,22 @@ If you want to enable debug output to the console, than uncomment the next line<
 emotionEngine.debug=true;<br>
 </b>
 <br>
-Some notes: Gamygdala is very flexible. You can make use of it in many different ways, and this example is only one way. For example, the degree of agent specific emotion control is flexible.<br>
-<br>
+<h3>Some final remarks...</h3>
+GAMYGDALA is very flexible. You can make use of it in many different ways, and this example is only one way. For example, the degree of agent specific emotion control is flexible.<br>
 To name a few ways in which you can do this:<br>
-&nbsp&nbsp You can choose to run the engine for only those agents you know have received new beliefs (using Gamygdala.appraise(Belief, Agent), where Agent is the one for whom you appraise the belief)<br>
-&nbsp&nbsp Define a common goal for multiple agents so that they all react to beliefs that changes the goal likelyhood of being achieved.<br>
-&nbsp&nbsp You can define completely different dynamics for each agent, using different decayfunctions and decay factors<br>
-&nbsp&nbsp You can have only one "agent"  for all bad guys, e.g., an agent called "bad_guys", if you want them to be all bad, with the same relation. Then being hit simply results in an event caused by "bad_guys", and you can then use that same agent ref for all expressions for the bad guys.<br>
+<ul>
+  <li>You can choose to run the engine for only those agents you know have received new beliefs (using Gamygdala.appraise(Belief, Agent), where Agent is the one for whom you appraise the belief)</li>
+  <li>Define a common goal for multiple agents so that they all react to beliefs that changes the goal likelyhood of being achieved</li>
+  <li>You can define completely different dynamics for each agent, using different decayfunctions and decay factors</li>
+  <li>You can have only one "agent"  for all bad guys, e.g., an agent called "bad_guys", if you want them to be all bad, with the same relation. Then being hit simply results in an event caused by "bad_guys", and you can then use that same agent ref for all expressions for the bad guys.</li>
+</ul>
 Also notice that Gamygdala's classes use String references in the constructors, e.g., new Belief(likelihood, causalAgentName, affectedGoalNames, goalCongruences).<br>
 This is true for new Agent(name), new Goal(name, utility), new Relation(...) and newBelief(...). This makes is very is to script/config the emotional setup, because you can simply use string refs to the objects.<br>
 Also the Gamygdala.createAgent(..) and Gamygdala.createGoalForAgent(..) work with literal refs, so an alternative is to have a sequence of these be loaded from a txt file and executed.<br>
 <br>
 <br>
-
+</td>
+<td>
+</td>
 </body>
 </html>
