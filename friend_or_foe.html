@@ -188,10 +188,8 @@ function create() {
 		bad_guys.getAt(i).emotionAgent=emotionEngine.createAgent('monster'+i);
 		//add a relation between player and monster for fun, the first monster hates the player, the second one likes the player, the third hates, etc..
 		emotionEngine.createRelation('monster'+i, 'player',(i%2)*2-1);
-		//add expression to the bad guy so we see something
-		tempPlugin=new Phaser.Plugin.GamygdalaExpression(game, bad_guys.getAt(i), bad_guys.getAt(i).emotionAgent);
-		tempPlugin.showOneOnly=true;
-		game.plugins.add(tempPlugin);
+		//add expression to the bad guy so we see something, but we show only the max emotion here as we are only intersted in the CURRENT relation after the random change
+		game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, bad_guys.getAt(i), bad_guys.getAt(i).emotionAgent, true));
 		
 		//note that we don't need to configure goals for these bad guys. They don't need to want to achieve something themselves to have social emotions, they can still feel pity, gloating, etc.. simply due to what happens to the player.
 	}

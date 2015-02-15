@@ -285,7 +285,6 @@ function update() {
 		}
 		
 	}
-		
 }
 
 function collectStar (player, star) {
@@ -299,7 +298,7 @@ function collectStar (player, star) {
 	
 	//Add Emotion event, and simply call the main Gamygdala instance and ask it to appraise the event for all agent's it knows. 
 	//in our case, eating a star is incrementally good for the agent's goal of winning, so we add a little bit of certainty towards reaching the goal.
-	emotionEngine.appraiseBelief(1,'player',['win'],[0.02], true);
+	emotionEngine.appraiseBelief(1,'player',['win'],[0.025], true);
 	
 	//Alternatively you can appraise this belief solely from the player's perspective using the ref to the gamygdala agent you stored somewhere.
 	//This is equivalent in our case because we know that this event only affects goals the player owns.

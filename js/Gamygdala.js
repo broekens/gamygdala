@@ -532,6 +532,25 @@ TUDelft.Gamygdala.Agent = function(name){
     this.internalState = [];
     this.gain=1;
 	this.gamygdalaInstance;
+	
+	this.mapPAD=[];
+	this.mapPAD['distress']=[-0.61,0.28,-0.36];
+	this.mapPAD['fear']=[-0.64,0.6,-0.43];
+	this.mapPAD['hope']=[0.51,0.23,0.14];
+	this.mapPAD['joy']=[0.76,.48,0.35];
+	this.mapPAD['satisfaction']=[0.87,0.2,0.62];
+	this.mapPAD['fear-confirmed']=[-0.61,0.06,-0.32];//defeated
+	this.mapPAD['disappointment']=[-0.61,-0.15,-0.29];
+	this.mapPAD['relief']=[0.29,-0.19,-0.28];
+	this.mapPAD['happy-for']=[0.64,0.35,0.25];
+	this.mapPAD['resentment']=[-0.35,0.35,0.29];
+	this.mapPAD['pity']=[-0.52,0.02,-0.21];//regretful
+	this.mapPAD['gloating']=[-0.45,0.48,0.42];//cruel
+	this.mapPAD['gratitude']=[0.64,0.16,-0.21];//grateful
+	this.mapPAD['anger']=[-0.51,0.59,0.25];
+	this.mapPAD['gratification']=[0.69,0.57,0.63];//triumphant
+	this.mapPAD['remorse']=[-0.57,0.28,-0.34];//guilty
+	
 };
 
 TUDelft.Gamygdala.Agent.prototype.addGoal = function(goal) {
@@ -604,6 +623,31 @@ TUDelft.Gamygdala.Agent.prototype.getEmotionalState = function(useGain){
 		return gainState;
 	} else
 		return this.internalState;   
+};
+
+TUDelft.Gamygdala.Agent.prototype.getPADState = function(useGain){
+	//this function returns a summation-based Pleasure Arousal Dominance mapping of the emotional state as is (gain=false)
+	//or a PAD mapping based on a gained limiter (limited between 0 and 1), of which the gain can be set by using setGain(gain)
+	//It sums over all emotions the equivalent PAD values of each emotion (i.e., [P,A,D]=SUM(Emotion_i([P,A,D])))), which is then gained or not.
+	//A high gain factor works well when appraisals are small and rare, and you want to see the effect of these appraisals
+	//A low gain factor (close to 0 but in any case below 1) works well for high frequency and/or large appraisals, so that the effect of these is dampened.
+	var PAD=[];
+	PAD[0]=0;
+	PAD[1]=0;
+	PAD[2]=0;
+	
+	for (var i=0;i<this.internalState.length;i++){
+		PAD[0]+=(this.internalState[i].intensity*this.mapPAD[this.internalState[i].name][0]);
+		PAD[1]+=(this.internalState[i].intensity*this.mapPAD[this.internalState[i].name][1]);
+		PAD[2]+=(this.internalState[i].intensity*this.mapPAD[this.internalState[i].name][2]);
+	}
+	if (useGain){
+		PAD[0]=(PAD[0]>=0?this.gain*PAD[0]/(this.gain*PAD[0]+1):-this.gain*PAD[0]/(this.gain*PAD[0]-1));
+		PAD[1]=(PAD[1]>=0?this.gain*PAD[1]/(this.gain*PAD[1]+1):-this.gain*PAD[1]/(this.gain*PAD[1]-1));
+		PAD[2]=(PAD[2]>=0?this.gain*PAD[2]/(this.gain*PAD[2]+1):-this.gain*PAD[2]/(this.gain*PAD[2]-1));
+		return PAD;
+	} else
+		return PAD;   
 };
 
 TUDelft.Gamygdala.Agent.prototype.printEmotionalState = function(useGain){
