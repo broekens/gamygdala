@@ -85,7 +85,7 @@ Phaser.Plugin.GamygdalaExpression = function (game, sprite, agent, showOnlyMaxIn
 	this.map['remorse']=15;
 	
 	this.THRESHOLD=0.1;
-	this.EMOTION_MAX_SIZE=100;
+	this.EMOTION_MAX_SIZE=128;
 	this.EMOTION_TEXTURE_SIZE=256;
 	this.baseScale=this.EMOTION_MAX_SIZE/this.EMOTION_TEXTURE_SIZE;
 	
