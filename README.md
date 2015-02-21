@@ -9,7 +9,7 @@ You can read more there, and run the example code.
 The example code is based on the game engine Phaser from photonstorm (http://www.photonstorm.com/).
 Gamygdala itself is not dependent on Phaser, but we have created two Plugin classes so that easy integration is possible with the Phaser Plugin system.
 
-To see the running example that explains Gamygdala usages, or two play the two (simple!) example games, visit http://www.joostbroekens.com/gamygdala.
+To see the running example that explains Gamygdala usage, or to play the two (simple!) example games, visit http://www.joostbroekens.com/gamygdala.
 To get a complete local copy that runs, download the master branch, and unzip.
 Run mongoose-free-5.3.5.exe which creates a simple web server with root dir the local dir where gamygdala is in.
 Then visit: http://localhost:8080 and click on the link to see the example.
