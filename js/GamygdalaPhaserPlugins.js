@@ -9,9 +9,12 @@
 * To use gamygdala as a Phaser plugin, simply create an instance of Phaser.Plugin.GamygdalaWrapper, and add it to your Phaser game as a plugin.
 * By default it is active. 
 * The easiest way to add it is as follows:
+* @example
 * gamygdalaPlugin=new Phaser.Plugin.GamygdalaWrapper();//create the plugin.
-* <mygame>.plugins.add(gamygdalaPlugin);//add the plugin to the game
+* mygame.plugins.add(gamygdalaPlugin);//add the plugin to the game
 * gamygdala=gamygdalaPlugin.getGamygdala(); //this gives you a ref to the actual underlying emotion engine, so that you can do what you need to do.
+* @class Phaser.Plugin.GamygdalaWrapper
+* @constructor
 */
 Phaser.Plugin.GamygdalaWrapper = function(){
 	this.gamygdala=new TUDelft.Gamygdala();
@@ -37,22 +40,25 @@ Phaser.Plugin.GamygdalaWrapper.prototype.update = function () {
 /**
 * Returns the gamygdala instance you need to do all emotional stuff.
 * @method Phaser.Plugin.GamygdalaWrapper.getGamygdala
-* @returns {TUDelft.Gamygdala} - The Gamygdala instance reference created by this plugin.
+* @returns {TUDelft.Gamygdala} The Gamygdala instance reference created by this plugin.
 */
 Phaser.Plugin.GamygdalaWrapper.prototype.getGamygdala = function(){
 	return this.gamygdala;
 };
 
+
+
 /**
 * This Phaser plugin class renders the emotions in a crude way to visualize what happens to an agent
 * It is provided for convenience, depends on Phaser functionality, and it is not suggested that this is the only (or even preferred) way emotions should be used in a game
 * One is free to use emotions in any way (e.g. changing gameplay, storyline, enemy behaviour, using rendered faces on the actual sprites, etc..)
-* See gamygdala_demo.html for a clear example of how to use it.
-* @method Phaser.Plugin.GamygdalaExpression
-* @param {Phaser.Game} - your Phaser game
-* @param {Phaser.Sprite} - the sprite to which this expression belongs
-* @param {TUDelft.Gamygdala.Agent} - the emotional agent who's  emotional state will be expressed.
-* @param {boolean} [optional] - setting showOnlyMaxIntensity to true shows only the expression with the highest intensity. False or omitted results in showing all.
+* See gamygdala_demo.html for a clear example of how to use this class.
+* @class Phaser.Plugin.GamygdalaExpression
+* @constructor 
+* @param {Phaser.Game} game Your Phaser game
+* @param {Phaser.Sprite} sprite The sprite to which this expression belongs
+* @param {TUDelft.Gamygdala.Agent} agent The emotional agent who's  emotional state will be expressed.
+* @param {boolean} [showOnlyMaxIntensity] Setting showOnlyMaxIntensity to true shows only the expression with the highest intensity. False or omitted results in showing all.
 */
 Phaser.Plugin.GamygdalaExpression = function (game, sprite, agent, showOnlyMaxIntensity) {
     this.agent = agent;

@@ -1,0 +1,815 @@
+{
+    "project": {},
+    "files": {
+        "Gamygdala.js": {
+            "name": "Gamygdala.js",
+            "modules": {},
+            "classes": {
+                "TUDelft.Gamygdala": 1,
+                "TUDelft.Gamygdala.Agent": 1,
+                "TUDelft.Gamygdala.Relation": 1,
+                "TUDelft.Gamygdala.Belief": 1,
+                "TUDelft.Gamygdala.Emotion": 1,
+                "TUDelft.Gamygdala.Goal": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "GamygdalaPhaserPlugins.js": {
+            "name": "GamygdalaPhaserPlugins.js",
+            "modules": {},
+            "classes": {
+                "Phaser.Plugin.GamygdalaWrapper": 1,
+                "Phaser.Plugin.GamygdalaExpression": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "TUDelft.Gamygdala": {
+            "name": "TUDelft.Gamygdala",
+            "shortname": "TUDelft.Gamygdala",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "Gamygdala.js",
+            "line": 8,
+            "description": "This is the main appraisal engine class taking care of interpreting a situation emotionally. Typically you create one instance of this class and then register all agents (emotional entities) to it, as well as all goals.",
+            "is_constructor": 1
+        },
+        "TUDelft.Gamygdala.Agent": {
+            "name": "TUDelft.Gamygdala.Agent",
+            "shortname": "TUDelft.Gamygdala.Agent",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "Gamygdala.js",
+            "line": 540,
+            "description": "This is the emotion agent class taking care of emotion management for one entity",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The name of the agent to be created. This name is used as ref throughout the appraisal engine.",
+                    "type": "String"
+                }
+            ]
+        },
+        "TUDelft.Gamygdala.Relation": {
+            "name": "TUDelft.Gamygdala.Relation",
+            "shortname": "TUDelft.Gamygdala.Relation",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "Gamygdala.js",
+            "line": 832,
+            "description": "This is the class that represents a relation one agent has with other agents.\nIt's main role is to store and manage the emotions felt for a target agent (e.g angry at, or pity for).\nEach agent maintains a list of relations, one relation for each target agent.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "targetName",
+                    "description": "The agent who is the target of the relation.",
+                    "type": "String"
+                },
+                {
+                    "name": "relation",
+                    "description": "The relation [-1 and 1].",
+                    "type": "Double"
+                }
+            ]
+        },
+        "TUDelft.Gamygdala.Belief": {
+            "name": "TUDelft.Gamygdala.Belief",
+            "shortname": "TUDelft.Gamygdala.Belief",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "Gamygdala.js",
+            "line": 882,
+            "description": "This class is a data structure to store one Belief for an agent\nA belief is created and fed into a Gamygdala instance (method Gamygdala.appraise()) for evaluation",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "likelihood",
+                    "description": "The likelihood of this belief to be true.",
+                    "type": "Double"
+                },
+                {
+                    "name": "causalAgentName",
+                    "description": "The agent's name of the causal agent of this belief.",
+                    "type": "String"
+                },
+                {
+                    "name": "affectedGoalNames",
+                    "description": "An array of affected goals' names.",
+                    "type": "String[]"
+                },
+                {
+                    "name": "goalCongruences",
+                    "description": "An array of the affected goals' congruences (i.e., the extend to which this event is good or bad for a goal [-1,1]).",
+                    "type": "Double[]"
+                },
+                {
+                    "name": "isIncremental",
+                    "description": "Incremental evidence enforces gamygdala to see this event as incremental evidence for (or against) the list of goals provided, i.e, it will add or subtract this belief's likelihood*congruence from the goal likelihood instead of using the belief as \"state\" defining the absolute likelihood",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ]
+        },
+        "TUDelft.Gamygdala.Emotion": {
+            "name": "TUDelft.Gamygdala.Emotion",
+            "shortname": "TUDelft.Gamygdala.Emotion",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "Gamygdala.js",
+            "line": 921,
+            "description": "This class is mainly a data structure to store an emotion with its intensity",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The string ref of the emotion",
+                    "type": "String"
+                },
+                {
+                    "name": "intensity",
+                    "description": "The intensity at which the emotion is set upon construction.",
+                    "type": "Double"
+                }
+            ]
+        },
+        "TUDelft.Gamygdala.Goal": {
+            "name": "TUDelft.Gamygdala.Goal",
+            "shortname": "TUDelft.Gamygdala.Goal",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "Gamygdala.js",
+            "line": 942,
+            "description": "This class is mainly a data structure to store a goal with it's utility and likelihood of being achieved\nThis is used as basis for interpreting Beliefs",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The name of the goal",
+                    "type": "String"
+                },
+                {
+                    "name": "utility",
+                    "description": "The utility of the goal",
+                    "type": "Double"
+                },
+                {
+                    "name": "isMaintenanceGoal",
+                    "description": "Defines if the goal is a maintenance goal or not. The default is that the goal is an achievement goal, i.e., a goal that once it's likelihood reaches true (1) or false (-1) stays that way.",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ]
+        },
+        "Phaser.Plugin.GamygdalaWrapper": {
+            "name": "Phaser.Plugin.GamygdalaWrapper",
+            "shortname": "Phaser.Plugin.GamygdalaWrapper",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "GamygdalaPhaserPlugins.js",
+            "line": 7,
+            "description": "This is the Phaser plugin that wraps around the main Gamygdala class.\nTo use gamygdala as a Phaser plugin, simply create an instance of Phaser.Plugin.GamygdalaWrapper, and add it to your Phaser game as a plugin.\nBy default it is active. \nThe easiest way to add it is as follows:",
+            "example": [
+                "\ngamygdalaPlugin=new Phaser.Plugin.GamygdalaWrapper();//create the plugin.\nmygame.plugins.add(gamygdalaPlugin);//add the plugin to the game\ngamygdala=gamygdalaPlugin.getGamygdala(); //this gives you a ref to the actual underlying emotion engine, so that you can do what you need to do."
+            ],
+            "is_constructor": 1
+        },
+        "Phaser.Plugin.GamygdalaExpression": {
+            "name": "Phaser.Plugin.GamygdalaExpression",
+            "shortname": "Phaser.Plugin.GamygdalaExpression",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "GamygdalaPhaserPlugins.js",
+            "line": 51,
+            "description": "This Phaser plugin class renders the emotions in a crude way to visualize what happens to an agent\nIt is provided for convenience, depends on Phaser functionality, and it is not suggested that this is the only (or even preferred) way emotions should be used in a game\nOne is free to use emotions in any way (e.g. changing gameplay, storyline, enemy behaviour, using rendered faces on the actual sprites, etc..)\nSee gamygdala_demo.html for a clear example of how to use this class.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "game",
+                    "description": "Your Phaser game",
+                    "type": "Phaser.Game"
+                },
+                {
+                    "name": "sprite",
+                    "description": "The sprite to which this expression belongs",
+                    "type": "Phaser.Sprite"
+                },
+                {
+                    "name": "agent",
+                    "description": "The emotional agent who's  emotional state will be expressed.",
+                    "type": "TUDelft.Gamygdala.Agent"
+                },
+                {
+                    "name": "showOnlyMaxIntensity",
+                    "description": "Setting showOnlyMaxIntensity to true shows only the expression with the highest intensity. False or omitted results in showing all.",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "Gamygdala.js",
+            "line": 25,
+            "description": "A facilitator method that creates a new Agent and registers it for you",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.createAgent",
+            "params": [
+                {
+                    "name": "agentName",
+                    "description": "The agent with agentName is created",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "An agent reference to the newly created agent",
+                "type": "TUDelft.Gamygdala.Agent"
+            },
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 39,
+            "description": "A facilitator method to create a goal for a particular agent, that also registers the goal to the agent and gamygdala.\nThis method is thus handy if you want to keep all gamygdala logic internal to Gamygdala.\nHowever, if you want to do more sophisticated stuff (e.g., goals for multiple agents, keep track of your own list of goals to also remove them, appraise events per agent without the need for gamygdala to keep track of goals, etc...) this method will probably be doing too much.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.createGoalForAgent",
+            "params": [
+                {
+                    "name": "agentName",
+                    "description": "The agent's name to which the newly created goal has to be added.",
+                    "type": "String"
+                },
+                {
+                    "name": "goalName",
+                    "description": "The goal's name.",
+                    "type": "String"
+                },
+                {
+                    "name": "goalUtility",
+                    "description": "The goal's utility.",
+                    "type": "Double"
+                },
+                {
+                    "name": "isMaintenanceGoal",
+                    "description": "Defines if the goal is a maintenance goal or not [optional]. The default is that the goal is an achievement goal, i.e., a goal that once it's likelihood reaches true (1) or false (-1) stays that way.",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "- a goal reference to the newly created goal.",
+                "type": "TUDelft.Gamygdala.Goal"
+            },
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 71,
+            "description": "A facilitator method to create a relation between two agents. Both source and target have to exist and be registered with this Gamygdala instance.\nThis method is thus handy if you want to keep all gamygdala logic internal to Gamygdala.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.createRelation",
+            "params": [
+                {
+                    "name": "sourceName",
+                    "description": "The agent who has the relation (the source)",
+                    "type": "String"
+                },
+                {
+                    "name": "targetName",
+                    "description": "The agent who is the target of the relation (the target)",
+                    "type": "String"
+                },
+                {
+                    "name": "relation",
+                    "description": "The relation (between -1 and 1).",
+                    "type": "Double"
+                }
+            ],
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 89,
+            "description": "A facilitator method to appraise an event. It takes in the same as what the new Belief(...) takes in, creates a belief and appraises it for all agents that are registered.\nThis method is thus handy if you want to keep all gamygdala logic internal to Gamygdala.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.appraiseBelief",
+            "params": [
+                {
+                    "name": "likelihood",
+                    "description": "The likelihood of this belief to be true.",
+                    "type": "Double"
+                },
+                {
+                    "name": "causalAgentName",
+                    "description": "The agent's name of the causal agent of this belief.",
+                    "type": "String"
+                },
+                {
+                    "name": "affectedGoalNames",
+                    "description": "An array of affected goals' names.",
+                    "type": "String[]"
+                },
+                {
+                    "name": "goalCongruences",
+                    "description": "An array of the affected goals' congruences (i.e., the extend to which this event is good or bad for a goal [-1,1]).",
+                    "type": "Double[]"
+                },
+                {
+                    "name": "isIncremental",
+                    "description": "Incremental evidence enforces gamygdala to see this event as incremental evidence for (or against) the list of goals provided, i.e, it will add or subtract this belief's likelihood*congruence from the goal likelihood instead of using the belief as \"state\" defining the absolute likelihood",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 103,
+            "description": "Facilitator method to print all emotional states to the console.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.printAllEmotions",
+            "params": [
+                {
+                    "name": "gain",
+                    "description": "Whether you want to print the gained (true) emotional states or non-gained (false).",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 115,
+            "description": "Facilitator to set the gain for the whole set of agents known to TUDelft.Gamygdala.\nFor more realistic, complex games, you would typically set the gain for each agent type separately, to finetune the intensity of the response.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.setGain",
+            "params": [
+                {
+                    "name": "gain",
+                    "description": "The gain value [0 and 20].",
+                    "type": "Double"
+                }
+            ],
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 127,
+            "description": "Sets the decay factor and function for emotional decay.\nIt sets the decay factor and type for emotional decay, so that an emotion will slowly get lower in intensity.\nWhenever decayAll is called, all emotions for all agents are decayed according to the factor and function set here.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.setDecay",
+            "params": [
+                {
+                    "name": "decayFactor",
+                    "description": "The decayfactor used. A factor of 1 means no decay, a factor",
+                    "type": "Double"
+                },
+                {
+                    "name": "decayFunction",
+                    "description": "The decay function tobe used. choose between linearDecay or exponentialDecay (see the corresponding methods)",
+                    "type": "Function"
+                }
+            ],
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 140,
+            "description": "This starts the actual gamygdala decay process. It simply calls decayAll() at the specified interval.\nThe timeMS only defines the interval at which to decay, not the rate over time, that is defined by the decayFactor and function.\nFor more complex games (e.g., games where agents are not active when far away from the player, or games that do not need all agents to decay all the time) you should yourself choose when to decay agents individually.\nTo do so you can simply call the agent.decay() method (see the agent class).",
+            "params": [
+                {
+                    "name": "timeMS",
+                    "description": "The \"framerate\" of the decay in milliseconds.",
+                    "type": "Int"
+                }
+            ],
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 155,
+            "description": "For every entity in your game (usually NPC's, but can be the player character too) you have to first create an Agent object and then register it using this method.\nRegistering the agent makes sure that Gamygdala will be able to emotionally interpret incoming Beliefs about the game state for that agent.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.registerAgent",
+            "params": [
+                {
+                    "name": "agent",
+                    "description": "The agent to be registered",
+                    "type": "TUDelft.Gamygdala.Agent"
+                }
+            ],
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 166,
+            "description": "Simple agent getter by name.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.getAgentByName",
+            "params": [
+                {
+                    "name": "agentName",
+                    "description": "The name of the agent to be found.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "null or an agent reference that has the name property equal to the agentName argument",
+                "type": "TUDelft.Gamygdala.Agent"
+            },
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 183,
+            "description": "For every goal that NPC's or player characters can have you have to first create a Goal object and then register it using this method.\nRegistering the goals makes sure that Gamygdala will be able to find the correct goal references when a Beliefs about the game state comes in.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.registerGoal",
+            "params": [
+                {
+                    "name": "goal",
+                    "description": "The goal to be registered.",
+                    "type": "TUDelft.Gamygdala.Goal"
+                }
+            ],
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 197,
+            "description": "Simple goal getter by name.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.getGoalByName",
+            "params": [
+                {
+                    "name": "goalName",
+                    "description": "The name of the goal to be found.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "null or a goal reference that has the name property equal to the goalName argument",
+                "type": "TUDelft.Gamygdala.Goal"
+            },
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 212,
+            "description": "This method is the main emotional interpretation logic entry point. It performs the complete appraisal of a single event (belief) for all agents (affectedAgent=null) or for only one agent (affectedAgent=true)\nif affectedAgent is set, then the complete appraisal logic is executed including the effect on relations (possibly influencing the emotional state of other agents),\nbut only if the affected agent (the one owning the goal) == affectedAgent\nthis is sometimes needed for efficiency, if you as a game developer know that particular agents can never appraise an event, then you can force Gamygdala to only look at a subset of agents.\nGamygdala assumes that the affectedAgent is indeed the only goal owner affected, that the belief is well-formed, and will not perform any checks, nor use Gamygdala's list of known goals to find other agents that share this goal (!!!)",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.appraise",
+            "params": [
+                {
+                    "name": "belief",
+                    "description": "The current event, in the form of a Belief object, to be appraised",
+                    "type": "TUDelft.Gamygdala.Belief"
+                },
+                {
+                    "name": "affectedAgent",
+                    "description": "The reference to the agent who needs to appraise the event. If given, this is the appraisal perspective (see explanation above).",
+                    "type": "TUDelft.Gamygdala.Agent",
+                    "optional": true
+                }
+            ],
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 320,
+            "description": "This method decays for all registered agents the emotional state and relations. It performs the decay according to the time passed, so longer intervals between consecutive calls result in bigger clunky steps.\nTypically this is called automatically when you use startDecay(), but you can use it yourself if you want to manage the timing.\nThis function is keeping track of the millis passed since the last call, and will (try to) keep the decay close to the desired decay factor, regardless the time passed\nSo you can call this any time you want (or, e.g., have the game loop call it, or have e.g., Phaser call it in the plugin update, which is default now).\nFurther, if you want to tweak the emotional intensity decay of individual agents, you should tweak the decayFactor per agent not the \"frame rate\" of the decay (as this doesn't change the rate).",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.decayAll",
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 513,
+            "description": "You can set Gamygdala to use this function for all emotion decay by calling setDecay() and passing this function as second parameter. This function is not to be called directly.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.linearDecay",
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 522,
+            "description": "You can set Gamygdala to use this function for all emotion decay by calling setDecay() and passing this function as second parameter. This function is not to be called directly.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.exponentialDecay",
+            "class": "TUDelft.Gamygdala"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 574,
+            "description": "Adds a goal to this agent's goal list (so this agent becomes an owner of the goal)",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.Agent.addGoal",
+            "params": [
+                {
+                    "name": "goal",
+                    "description": "The goal to be added.",
+                    "type": "TUDelft.Gamygdala.Goal"
+                }
+            ],
+            "class": "TUDelft.Gamygdala.Agent"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 584,
+            "description": "Adds a goal to this agent's goal list (so this agent becomes an owner of the goal)",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.Agent.removeGoal",
+            "params": [
+                {
+                    "name": "goalName",
+                    "description": "The name of the goal to be added.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "True if the goal could be removed, false otherwise.",
+                "type": "Boolean"
+            },
+            "class": "TUDelft.Gamygdala.Agent"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 599,
+            "description": "Checks if this agent owns a goal.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.Agent.hasGoal",
+            "params": [
+                {
+                    "name": "goalName",
+                    "description": "The name of the goal to be checked.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "True if this agent owns the goal, false otherwise.",
+                "type": "Boolean"
+            },
+            "class": "TUDelft.Gamygdala.Agent"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 608,
+            "description": "If this agent has a goal with name goalName, this method returns that goal.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.Agent.getGoalByName",
+            "params": [
+                {
+                    "name": "goalName",
+                    "description": "The name of the goal to be found.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the reference to the goal.",
+                "type": "TUDelft.Gamygdala.Goal"
+            },
+            "class": "TUDelft.Gamygdala.Agent"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 622,
+            "description": "Sets the gain for this agent.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.Agent.setGain",
+            "params": [
+                {
+                    "name": "gain",
+                    "description": "The gain value [0 and 20].",
+                    "type": "Double"
+                }
+            ],
+            "class": "TUDelft.Gamygdala.Agent"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 634,
+            "description": "A facilitating method to be able to appraise one event only from the perspective of the current agent (this).\nNeeds an instantiated gamygdala object (automatic when the agent is registered with Gamygdala.registerAgent(agent) to a Gamygdala instance).",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.Agent.appraise",
+            "params": [
+                {
+                    "name": "belief",
+                    "description": "The belief to be appraised.",
+                    "type": "TUDelft.Gamygdala.Belief"
+                }
+            ],
+            "class": "TUDelft.Gamygdala.Agent"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 658,
+            "description": "This function returns either the state as is (gain=false) or a state based on gained limiter (limited between 0 and 1), of which the gain can be set by using setGain(gain).\nA high gain factor works well when appraisals are small and rare, and you want to see the effect of these appraisals\nA low gain factor (close to 0 but in any case below 1) works well for high frequency and/or large appraisals, so that the effect of these is dampened.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.Agent.getEmotionalState",
+            "params": [
+                {
+                    "name": "useGain",
+                    "description": "Whether to use the gain function or not.",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "An array of emotions.",
+                "type": "TUDelft.Gamygdala.Emotion[]"
+            },
+            "class": "TUDelft.Gamygdala.Agent"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 679,
+            "description": "This function returns a summation-based Pleasure Arousal Dominance mapping of the emotional state as is (gain=false), or a PAD mapping based on a gained limiter (limited between 0 and 1), of which the gain can be set by using setGain(gain).\nIt sums over all emotions the equivalent PAD values of each emotion (i.e., [P,A,D]=SUM(Emotion_i([P,A,D])))), which is then gained or not.\nA high gain factor works well when appraisals are small and rare, and you want to see the effect of these appraisals.\nA low gain factor (close to 0 but in any case below 1) works well for high frequency and/or large appraisals, so that the effect of these is dampened.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.Agent.getPADState",
+            "params": [
+                {
+                    "name": "useGain",
+                    "description": "Whether to use the gain function or not.",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "An array of doubles with Pleasure at index 0, Arousal at index [1] and Dominance at index [2].",
+                "type": "Double[]"
+            },
+            "class": "TUDelft.Gamygdala.Agent"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 708,
+            "description": "This function prints to the console either the state as is (gain=false) or a state based on gained limiter (limited between 0 and 1), of which the gain can be set by using setGain(gain).\nA high gain factor works well when appraisals are small and rare, and you want to see the effect of these appraisals\nA low gain factor (close to 0 but in any case below 1) works well for high frequency and/or large appraisals, so that the effect of these is dampened.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.Agent.printEmotionalState",
+            "params": [
+                {
+                    "name": "useGain",
+                    "description": "Whether to use the gain function or not.",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "TUDelft.Gamygdala.Agent"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 726,
+            "description": "Sets the relation this agent has with the agent defined by agentName. If the relation does not exist, it will be created, otherwise it will be updated.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.Agent.updateRelation",
+            "params": [
+                {
+                    "name": "agentName",
+                    "description": "The agent who is the target of the relation.",
+                    "type": "String"
+                },
+                {
+                    "name": "like",
+                    "description": "The relation (between -1 and 1).",
+                    "type": "Double"
+                }
+            ],
+            "class": "TUDelft.Gamygdala.Agent"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 745,
+            "description": "Checks if this agent has a relation with the agent defined by agentName.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.Agent.hasRelationWith",
+            "params": [
+                {
+                    "name": "agentName",
+                    "description": "The agent who is the target of the relation.",
+                    "type": "String"
+                },
+                {
+                    "name": "True",
+                    "description": "if the relation exists, otherwise false.",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "TUDelft.Gamygdala.Agent"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 754,
+            "description": "Returns the relation object this agent has with the agent defined by agentName.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.Agent.getRelation",
+            "params": [
+                {
+                    "name": "agentName",
+                    "description": "The agent who is the target of the relation.",
+                    "type": "String"
+                },
+                {
+                    "name": "The",
+                    "description": "relation object or null if non existing.",
+                    "type": "TUDelft.Gamygdala.Relation"
+                }
+            ],
+            "class": "TUDelft.Gamygdala.Agent"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 768,
+            "description": "Returns the relation object this agent has with the agent defined by agentName.",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.Agent.printRelations",
+            "params": [
+                {
+                    "name": "agentName",
+                    "description": "The agent who is the target of the relation will only be printed, or when omitted all relations are printed.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "class": "TUDelft.Gamygdala.Agent"
+        },
+        {
+            "file": "Gamygdala.js",
+            "line": 792,
+            "description": "This method decays the emotional state and relations according to the decay factor and function defined in gamygdala. \nTypically this is called automatically when you use startDecay() in Gamygdala, but you can use it yourself if you want to manage the timing.\nThis function is keeping track of the millis passed since the last call, and will (try to) keep the decay close to the desired decay factor, regardless the time passed\nSo you can call this any time you want (or, e.g., have the game loop call it, or have e.g., Phaser call it in the plugin update, which is default now).\nFurther, if you want to tweak the emotional intensity decay of individual agents, you should tweak the decayFactor per agent not the \"frame rate\" of the decay (as this doesn't change the rate).",
+            "itemtype": "method",
+            "name": "TUDelft.Gamygdala.decayAll",
+            "params": [
+                {
+                    "name": "gamygdalaInstance",
+                    "description": "A reference to the correct gamygdala instance that contains the decayFunction property to be used )(so you could use different gamygdala instances to manage different groups of  agents)",
+                    "type": "TUDelft.Gamygdala"
+                }
+            ],
+            "class": "TUDelft.Gamygdala.Agent"
+        },
+        {
+            "file": "GamygdalaPhaserPlugins.js",
+            "line": 27,
+            "description": "This is run when the plugins update during the core game loop.\nIt performs a regular decay, if phaserManagedDecay = true.",
+            "itemtype": "method",
+            "name": "Phaser.Plugin.GamygdalaWrapper.update",
+            "class": "Phaser.Plugin.GamygdalaWrapper"
+        },
+        {
+            "file": "GamygdalaPhaserPlugins.js",
+            "line": 40,
+            "description": "Returns the gamygdala instance you need to do all emotional stuff.",
+            "itemtype": "method",
+            "name": "Phaser.Plugin.GamygdalaWrapper.getGamygdala",
+            "return": {
+                "description": "The Gamygdala instance reference created by this plugin.",
+                "type": "TUDelft.Gamygdala"
+            },
+            "class": "Phaser.Plugin.GamygdalaWrapper"
+        },
+        {
+            "file": "GamygdalaPhaserPlugins.js",
+            "line": 120,
+            "description": "This is run automatically when the Phaser plugins update is performed during the core game loop\nIt renders the emotional expression for the sprite to whom the expression is coupled",
+            "itemtype": "method",
+            "name": "Phaser.Plugin.GamygdalaExpression.update",
+            "class": "Phaser.Plugin.GamygdalaExpression"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " GamygdalaPhaserPlugins.js:40"
+        },
+        {
+            "message": "Missing item type\nThis starts the actual gamygdala decay process. It simply calls decayAll() at the specified interval.\nThe timeMS only defines the interval at which to decay, not the rate over time, that is defined by the decayFactor and function.\nFor more complex games (e.g., games where agents are not active when far away from the player, or games that do not need all agents to decay all the time) you should yourself choose when to decay agents individually.\nTo do so you can simply call the agent.decay() method (see the agent class).",
+            "line": " Gamygdala.js:140"
+        }
+    ]
+}

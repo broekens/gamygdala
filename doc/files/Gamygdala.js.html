@@ -1,3 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Gamygdala.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Phaser.Plugin.GamygdalaExpression.html">Phaser.Plugin.GamygdalaExpression</a></li>
+                                <li><a href="../classes/Phaser.Plugin.GamygdalaWrapper.html">Phaser.Plugin.GamygdalaWrapper</a></li>
+                                <li><a href="../classes/TUDelft.Gamygdala.html">TUDelft.Gamygdala</a></li>
+                                <li><a href="../classes/TUDelft.Gamygdala.Agent.html">TUDelft.Gamygdala.Agent</a></li>
+                                <li><a href="../classes/TUDelft.Gamygdala.Belief.html">TUDelft.Gamygdala.Belief</a></li>
+                                <li><a href="../classes/TUDelft.Gamygdala.Emotion.html">TUDelft.Gamygdala.Emotion</a></li>
+                                <li><a href="../classes/TUDelft.Gamygdala.Goal.html">TUDelft.Gamygdala.Goal</a></li>
+                                <li><a href="../classes/TUDelft.Gamygdala.Relation.html">TUDelft.Gamygdala.Relation</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: Gamygdala.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
 ////////////////////////////////////////////////////////////////////////
 //GAMYGDALA EMOTION ENIGINE CODE. This is STANDALONE AND NOT DEPENDENT ON PHASER!
 ////////////////////////////////////////////////////////////////////////
@@ -41,10 +129,10 @@ TUDelft.Gamygdala.prototype.createAgent = function(agentName){
 * This method is thus handy if you want to keep all gamygdala logic internal to Gamygdala.
 * However, if you want to do more sophisticated stuff (e.g., goals for multiple agents, keep track of your own list of goals to also remove them, appraise events per agent without the need for gamygdala to keep track of goals, etc...) this method will probably be doing too much.
 * @method TUDelft.Gamygdala.createGoalForAgent
-* @param {String} agentName The agent's name to which the newly created goal has to be added.
-* @param {String} goalName The goal's name.
-* @param {double} goalUtility The goal's utility.
-* @param {boolean} isMaintenanceGoal Defines if the goal is a maintenance goal or not [optional]. The default is that the goal is an achievement goal, i.e., a goal that once it's likelihood reaches true (1) or false (-1) stays that way.
+* @param {String} agentName The agent&#x27;s name to which the newly created goal has to be added.
+* @param {String} goalName The goal&#x27;s name.
+* @param {double} goalUtility The goal&#x27;s utility.
+* @param {boolean} isMaintenanceGoal Defines if the goal is a maintenance goal or not [optional]. The default is that the goal is an achievement goal, i.e., a goal that once it&#x27;s likelihood reaches true (1) or false (-1) stays that way.
 * @return {TUDelft.Gamygdala.Goal} - a goal reference to the newly created goal.
 */
 TUDelft.Gamygdala.prototype.createGoalForAgent = function(agentName, goalName, goalUtility, isMaintenanceGoal){
@@ -52,7 +140,7 @@ TUDelft.Gamygdala.prototype.createGoalForAgent = function(agentName, goalName, g
 	if (tempAgent){
 		tempGoal=this.getGoalByName(goalName);
 		if (tempGoal)
-			console.log("Warning: I cannot make a new goal with the same name "+goalName+" as one is registered already. I assume the goal is a common goal and will add the already known goal with that name to the agent "+agentName);
+			console.log(&quot;Warning: I cannot make a new goal with the same name &quot;+goalName+&quot; as one is registered already. I assume the goal is a common goal and will add the already known goal with that name to the agent &quot;+agentName);
 		else {
 			tempGoal=new TUDelft.Gamygdala.Goal(goalName, goalUtility);
 			this.registerGoal(tempGoal);
@@ -62,7 +150,7 @@ TUDelft.Gamygdala.prototype.createGoalForAgent = function(agentName, goalName, g
 			tempGoal.isMaintenanceGoal=isMaintenanceGoal;
 		return tempGoal;
 	} else
-	{	console.log("Error: agent with name "+ agentName + " does not exist, so I cannot add a create a goal for it.");
+	{	console.log(&quot;Error: agent with name &quot;+ agentName + &quot; does not exist, so I cannot add a create a goal for it.&quot;);
 		return null;
 	}
 	
@@ -79,10 +167,10 @@ TUDelft.Gamygdala.prototype.createGoalForAgent = function(agentName, goalName, g
 TUDelft.Gamygdala.prototype.createRelation = function(sourceName, targetName, relation){
 	source=this.getAgentByName(sourceName);
 	target=this.getAgentByName(targetName);
-	if (source && target && relation>=-1 && relation<=1){
+	if (source &amp;&amp; target &amp;&amp; relation&gt;=-1 &amp;&amp; relation&lt;=1){
 		source.updateRelation(targetName, relation);
 	} else
-		console.log('Error: cannot relate ' + source + '  to ' + target + ' with intensity '+relation);
+		console.log(&#x27;Error: cannot relate &#x27; + source + &#x27;  to &#x27; + target + &#x27; with intensity &#x27;+relation);
 	
 }
 
@@ -91,10 +179,10 @@ TUDelft.Gamygdala.prototype.createRelation = function(sourceName, targetName, re
 * This method is thus handy if you want to keep all gamygdala logic internal to Gamygdala.
 * @method TUDelft.Gamygdala.appraiseBelief
 * @param {double} likelihood The likelihood of this belief to be true.
-* @param {String} causalAgentName The agent's name of the causal agent of this belief.
-* @param {String[]} affectedGoalNames An array of affected goals' names.
-* @param {double[]} goalCongruences An array of the affected goals' congruences (i.e., the extend to which this event is good or bad for a goal [-1,1]).
-* @param {boolean} [isIncremental] Incremental evidence enforces gamygdala to see this event as incremental evidence for (or against) the list of goals provided, i.e, it will add or subtract this belief's likelihood*congruence from the goal likelihood instead of using the belief as "state" defining the absolute likelihood
+* @param {String} causalAgentName The agent&#x27;s name of the causal agent of this belief.
+* @param {String[]} affectedGoalNames An array of affected goals&#x27; names.
+* @param {double[]} goalCongruences An array of the affected goals&#x27; congruences (i.e., the extend to which this event is good or bad for a goal [-1,1]).
+* @param {boolean} [isIncremental] Incremental evidence enforces gamygdala to see this event as incremental evidence for (or against) the list of goals provided, i.e, it will add or subtract this belief&#x27;s likelihood*congruence from the goal likelihood instead of using the belief as &quot;state&quot; defining the absolute likelihood
 */
 TUDelft.Gamygdala.prototype.appraiseBelief = function(likelihood, causalAgentName, affectedGoalNames, goalCongruences, isIncremental){
 	tempBelief=new TUDelft.Gamygdala.Belief(likelihood, causalAgentName, affectedGoalNames, goalCongruences, isIncremental);
@@ -106,7 +194,7 @@ TUDelft.Gamygdala.prototype.appraiseBelief = function(likelihood, causalAgentNam
 * @param {boolean} gain Whether you want to print the gained (true) emotional states or non-gained (false).
 */
 TUDelft.Gamygdala.prototype.printAllEmotions = function(gain){
-	for (var i=0;i<this.agents.length;i++){
+	for (var i=0;i&lt;this.agents.length;i++){
 		this.agents[i].printEmotionalState(gain);
 		this.agents[i].printRelations(null);
 	}
@@ -119,7 +207,7 @@ TUDelft.Gamygdala.prototype.printAllEmotions = function(gain){
 * @param {double} gain The gain value [0 and 20].
 */
 TUDelft.Gamygdala.prototype.setGain =function(gain){
-	for (var i=0;i<this.agents.length;i++){
+	for (var i=0;i&lt;this.agents.length;i++){
 		this.agents[i].setGain(gain);
 	}
 }
@@ -142,7 +230,7 @@ TUDelft.Gamygdala.prototype.setDecay = function(decayFactor, decayFunction){
 * The timeMS only defines the interval at which to decay, not the rate over time, that is defined by the decayFactor and function.
 * For more complex games (e.g., games where agents are not active when far away from the player, or games that do not need all agents to decay all the time) you should yourself choose when to decay agents individually.
 * To do so you can simply call the agent.decay() method (see the agent class).
-* @param {int} timeMS The "framerate" of the decay in milliseconds. 
+* @param {int} timeMS The &quot;framerate&quot; of the decay in milliseconds. 
 */
 TUDelft.Gamygdala.prototype.startDecay = function(timeMS){
 	setInterval(this.decayAll.bind(this), timeMS);
@@ -153,7 +241,7 @@ TUDelft.Gamygdala.prototype.startDecay = function(timeMS){
 ////////////////////////////////////////////////////////
  
 /**
-* For every entity in your game (usually NPC's, but can be the player character too) you have to first create an Agent object and then register it using this method.
+* For every entity in your game (usually NPC&#x27;s, but can be the player character too) you have to first create an Agent object and then register it using this method.
 * Registering the agent makes sure that Gamygdala will be able to emotionally interpret incoming Beliefs about the game state for that agent.
 * @method TUDelft.Gamygdala.registerAgent
 * @param {TUDelft.Gamygdala.Agent} agent The agent to be registered
@@ -170,18 +258,18 @@ TUDelft.Gamygdala.prototype.registerAgent = function(agent){
 * @return {TUDelft.Gamygdala.Agent} null or an agent reference that has the name property equal to the agentName argument
 */
 TUDelft.Gamygdala.prototype.getAgentByName = function(agentName){
-    for(var i = 0; i <this.agents.length; i++){
+    for(var i = 0; i &lt;this.agents.length; i++){
         if(this.agents[i].name === agentName){
             return this.agents[i];
         }
     }
-	console.log('Warning: agent '+agentName+' not found');
+	console.log(&#x27;Warning: agent &#x27;+agentName+&#x27; not found&#x27;);
     return null;
 };
 
 
 /**
-* For every goal that NPC's or player characters can have you have to first create a Goal object and then register it using this method.
+* For every goal that NPC&#x27;s or player characters can have you have to first create a Goal object and then register it using this method.
 * Registering the goals makes sure that Gamygdala will be able to find the correct goal references when a Beliefs about the game state comes in.
 * @method TUDelft.Gamygdala.registerGoal
 * @param {TUDelft.Gamygdala.Goal} goal The goal to be registered.
@@ -190,7 +278,7 @@ TUDelft.Gamygdala.prototype.registerGoal = function(goal){
 	if (this.getGoalByName(goal.name)==null)
 		this.goals.push(goal);
 	else{
-		console.log("Warning: failed adding a second goal with the same name: "+goal.name);
+		console.log(&quot;Warning: failed adding a second goal with the same name: &quot;+goal.name);
 	}
 };
 
@@ -201,7 +289,7 @@ TUDelft.Gamygdala.prototype.registerGoal = function(goal){
 * @return {TUDelft.Gamygdala.Goal} null or a goal reference that has the name property equal to the goalName argument
 */
 TUDelft.Gamygdala.prototype.getGoalByName = function(goalName){
-    for(var i = 0; i <this.goals.length; i++){
+    for(var i = 0; i &lt;this.goals.length; i++){
         if(this.goals[i].name === goalName){
             return this.goals[i];
         }
@@ -214,7 +302,7 @@ TUDelft.Gamygdala.prototype.getGoalByName = function(goalName){
 * if affectedAgent is set, then the complete appraisal logic is executed including the effect on relations (possibly influencing the emotional state of other agents),
 * but only if the affected agent (the one owning the goal) == affectedAgent
 * this is sometimes needed for efficiency, if you as a game developer know that particular agents can never appraise an event, then you can force Gamygdala to only look at a subset of agents.
-* Gamygdala assumes that the affectedAgent is indeed the only goal owner affected, that the belief is well-formed, and will not perform any checks, nor use Gamygdala's list of known goals to find other agents that share this goal (!!!)
+* Gamygdala assumes that the affectedAgent is indeed the only goal owner affected, that the belief is well-formed, and will not perform any checks, nor use Gamygdala&#x27;s list of known goals to find other agents that share this goal (!!!)
 * @method TUDelft.Gamygdala.appraise 
 * @param {TUDelft.Gamygdala.Belief} belief The current event, in the form of a Belief object, to be appraised
 * @param {TUDelft.Gamygdala.Agent} [affectedAgent] The reference to the agent who needs to appraise the event. If given, this is the appraisal perspective (see explanation above).
@@ -226,16 +314,16 @@ TUDelft.Gamygdala.prototype.appraise = function(belief, affectedAgent){
 			console.log(belief);
 		
 		if(belief.goalCongruences.length != belief.affectedGoalNames.length){
-			console.log("Error: the congruence list was not of the same length as the affected goal list");
+			console.log(&quot;Error: the congruence list was not of the same length as the affected goal list&quot;);
 			return false; //The congruence list must be of the same length as the affected goals list.   
 		}
 		if (this.goals.length==0){
-			console.log("Warning: no goals registered to Gamygdala, all goals to be considered in appraisal need to be registered.");
+			console.log(&quot;Warning: no goals registered to Gamygdala, all goals to be considered in appraisal need to be registered.&quot;);
 			return false; //The congruence list must be of the same length as the affected goals list.   
 		}
 			
 		
-		for (var i = 0; i < belief.affectedGoalNames.length; i++) {
+		for (var i = 0; i &lt; belief.affectedGoalNames.length; i++) {
 			//Loop through every goal in the list of affected goals by this event.
 			var currentGoal=this.getGoalByName(belief.affectedGoalNames[i]);
 			
@@ -245,24 +333,24 @@ TUDelft.Gamygdala.prototype.appraise = function(belief, affectedAgent){
 				var deltaLikelihood = this.calculateDeltaLikelihood(currentGoal, belief.goalCongruences[i], belief.likelihood, belief.isIncremental);
 				var desirability = belief.goalCongruences[i] * utility;
 				if (this.debug)
-					console.log('Evaluated goal: ' + currentGoal.name +'('+utility+', '+deltaLikelihood+')');
+					console.log(&#x27;Evaluated goal: &#x27; + currentGoal.name +&#x27;(&#x27;+utility+&#x27;, &#x27;+deltaLikelihood+&#x27;)&#x27;);
 						
 				
 				//now find the owners, and update their emotional states
-				for(var j = 0; j < this.agents.length; j++){
+				for(var j = 0; j &lt; this.agents.length; j++){
 					if(this.agents[j].hasGoal(currentGoal.name)){
 						var owner=this.agents[j];
 						
 						if (this.debug)
-							console.log('....owned by '+owner.name);
+							console.log(&#x27;....owned by &#x27;+owner.name);
 						this.evaluateInternalEmotion(utility, deltaLikelihood, currentGoal.likelihood, owner);  
 						this.agentActions(owner.name, belief.causalAgentName, owner.name, desirability, utility, deltaLikelihood); 
 						//now check if anyone has a relation to this goal owner, and update the social emotions accordingly.
-						for (var k=0;k<this.agents.length;k++){
+						for (var k=0;k&lt;this.agents.length;k++){
 							var relation=this.agents[k].getRelation(owner.name);
 							if(relation!=null){
 								if (this.debug){
-									console.log(this.agents[k].name + ' has a relationship with '+owner.name);
+									console.log(this.agents[k].name + &#x27; has a relationship with &#x27;+owner.name);
 									console.log(relation);
 								}
 								//The agent has relationship with the goal owner which has nonzero utility, add relational effects to the relations for agent[k]. 
@@ -271,7 +359,7 @@ TUDelft.Gamygdala.prototype.appraise = function(belief, affectedAgent){
 								this.agentActions(owner.name, belief.causalAgentName, this.agents[k].name, desirability, utility, deltaLikelihood); 
 							} else {
 								if (this.debug)
-									console.log(this.agents[k].name + ' has NO relationship with '+owner.name);
+									console.log(this.agents[k].name + &#x27; has NO relationship with &#x27;+owner.name);
 							}
 						}	  
 					}
@@ -280,7 +368,7 @@ TUDelft.Gamygdala.prototype.appraise = function(belief, affectedAgent){
 		}
 	} else {
 		//check only affectedAgent (which can be much faster) and does not involve console output nor checks
-		for (var i = 0; i < belief.affectedGoalNames.length; i++) {
+		for (var i = 0; i &lt; belief.affectedGoalNames.length; i++) {
 			//Loop through every goal in the list of affected goals by this event.
 			var currentGoal=affectedAgent.getGoalByName(belief.affectedGoalNames[i]);
 			var utility = currentGoal.utility;
@@ -294,11 +382,11 @@ TUDelft.Gamygdala.prototype.appraise = function(belief, affectedAgent){
 			this.evaluateInternalEmotion(utility, deltaLikelihood, currentGoal.likelihood, owner);  
 			this.agentActions(owner.name, belief.causalAgentName, owner.name, desirability, utility, deltaLikelihood); 
 			//now check if anyone has a relation to this goal owner, and update the social emotions accordingly.
-			for (var k=0;k<this.agents.length;k++){
+			for (var k=0;k&lt;this.agents.length;k++){
 				var relation=this.agents[k].getRelation(owner.name);
 				if(relation!=null){
 					if (this.debug){
-						console.log(this.agents[k].name + ' has a relationship with '+owner.name);
+						console.log(this.agents[k].name + &#x27; has a relationship with &#x27;+owner.name);
 						console.log(relation);
 					}
 					//The agent has relationship with the goal owner which has nonzero utility, add relational effects to the relations for agent[k]. 
@@ -307,7 +395,7 @@ TUDelft.Gamygdala.prototype.appraise = function(belief, affectedAgent){
 					this.agentActions(owner.name, belief.causalAgentName, this.agents[k].name, desirability, utility, deltaLikelihood); 
 				} else {
 					if (this.debug)
-						console.log(this.agents[k].name + ' has NO relationship with '+owner.name);
+						console.log(this.agents[k].name + &#x27; has NO relationship with &#x27;+owner.name);
 				}
 			}	  
 		}
@@ -322,13 +410,13 @@ TUDelft.Gamygdala.prototype.appraise = function(belief, affectedAgent){
 * Typically this is called automatically when you use startDecay(), but you can use it yourself if you want to manage the timing.
 * This function is keeping track of the millis passed since the last call, and will (try to) keep the decay close to the desired decay factor, regardless the time passed
 * So you can call this any time you want (or, e.g., have the game loop call it, or have e.g., Phaser call it in the plugin update, which is default now).
-* Further, if you want to tweak the emotional intensity decay of individual agents, you should tweak the decayFactor per agent not the "frame rate" of the decay (as this doesn't change the rate).
+* Further, if you want to tweak the emotional intensity decay of individual agents, you should tweak the decayFactor per agent not the &quot;frame rate&quot; of the decay (as this doesn&#x27;t change the rate).
 * @method TUDelft.Gamygdala.decayAll
 */
 TUDelft.Gamygdala.prototype.decayAll = function(){
 	this.millisPassed=Date.now()-this.lastMillis;
 	this.lastMillis=Date.now();
-	for (var i=0;i<this.agents.length;i++){
+	for (var i=0;i&lt;this.agents.length;i++){
 		this.agents[i].decay(this);
 	}
 }
@@ -338,12 +426,12 @@ TUDelft.Gamygdala.prototype.decayAll = function(){
 ////////////////////////////////////////////////////////
 
 TUDelft.Gamygdala.prototype.calculateDeltaLikelihood = function(goal, congruence, likelihood, isIncremental){
-	//Defines the change in a goal's likelihood due to the congruence and likelihood of a current event.
+	//Defines the change in a goal&#x27;s likelihood due to the congruence and likelihood of a current event.
 	//We cope with two types of beliefs: incremental and absolute beliefs. Incrementals have their likelihood added to the goal, absolute define the current likelihood of the goal
-	//And two types of goals: maintenance and achievement. If an achievement goal (the default) is -1 or 1, we can't change it any more (unless externally and explicitly by changing the goal.likelihood).
+	//And two types of goals: maintenance and achievement. If an achievement goal (the default) is -1 or 1, we can&#x27;t change it any more (unless externally and explicitly by changing the goal.likelihood).
 	var oldLikelihood = goal.likelihood; 
 	var newLikelihood;
-	if (goal.isMaintenanceGoal==false && (oldLikelihood>=1 | oldLikelihood<=-1))
+	if (goal.isMaintenanceGoal==false &amp;&amp; (oldLikelihood&gt;=1 | oldLikelihood&lt;=-1))
 		return 0;
 	if (isIncremental){
 		newLikelihood = oldLikelihood + likelihood*congruence;
@@ -366,54 +454,54 @@ TUDelft.Gamygdala.prototype.evaluateInternalEmotion = function(utility, deltaLik
     var intensity;
     var emotion = [];
 	
-	if( utility >= 0){
-        if ( deltaLikelihood >= 0){
+	if( utility &gt;= 0){
+        if ( deltaLikelihood &gt;= 0){
             positive = true;
         }else {
             positive = false;
         }
-    } else if ( utility < 0){
-        if( deltaLikelihood >= 0){
+    } else if ( utility &lt; 0){
+        if( deltaLikelihood &gt;= 0){
             positive = false;
         } else {
             positive = true;
         }
     }  
-    if(likelihood > 0 && likelihood < 1){
+    if(likelihood &gt; 0 &amp;&amp; likelihood &lt; 1){
         if (positive === true){
-            emotion.push('hope');    
+            emotion.push(&#x27;hope&#x27;);    
         }else {
-            emotion.push('fear');   
+            emotion.push(&#x27;fear&#x27;);   
         }
     } else if(likelihood === 1){
-        if (utility >= 0){
-            if(deltaLikelihood < 0.5){
-                emotion.push('satisfaction'); 
+        if (utility &gt;= 0){
+            if(deltaLikelihood &lt; 0.5){
+                emotion.push(&#x27;satisfaction&#x27;); 
             }
-            emotion.push('joy');
+            emotion.push(&#x27;joy&#x27;);
         }
         else {
-            if(deltaLikelihood <0.5){
-                emotion.push('fear-confirmed');
+            if(deltaLikelihood &lt;0.5){
+                emotion.push(&#x27;fear-confirmed&#x27;);
             }
-            emotion.push('distress');
+            emotion.push(&#x27;distress&#x27;);
         }
     } else if(likelihood === 0){
-        if( utility >= 0){
-            if( deltaLikelihood > 0.5){
-                emotion.push('disappointment');       
+        if( utility &gt;= 0){
+            if( deltaLikelihood &gt; 0.5){
+                emotion.push(&#x27;disappointment&#x27;);       
             }
-            emotion.push('distress');
+            emotion.push(&#x27;distress&#x27;);
         }else {
-            if( deltaLikelihood > 0.5){
-                emotion.push('relief');  
+            if( deltaLikelihood &gt; 0.5){
+                emotion.push(&#x27;relief&#x27;);  
             }
-            emotion.push('joy');
+            emotion.push(&#x27;joy&#x27;);
         }
     }
     intensity = Math.abs(utility * deltaLikelihood);
 	if(intensity != 0){
-        for(var i = 0; i < emotion.length; i++){
+        for(var i = 0; i &lt; emotion.length; i++){
 			agent.updateEmotionalState(new TUDelft.Gamygdala.Emotion(emotion[i], intensity));   
         }
     }
@@ -422,24 +510,24 @@ TUDelft.Gamygdala.prototype.evaluateInternalEmotion = function(utility, deltaLik
 TUDelft.Gamygdala.prototype.evaluateSocialEmotion = function(utility, desirability, deltaLikelihood, relation, agent){
     //This function is used to evaluate happy-for, pity, gloating or resentment.
     //Emotions that arise when we evaluate events that affect goals of others.
-    //The desirability is the desirability from the goal owner's perspective.
+    //The desirability is the desirability from the goal owner&#x27;s perspective.
     //The agent is the agent getting evaluated (the agent that gets the social emotion added to his emotional state).
     //The relation is a relation object between the agent being evaluated and the goal owner of the affected goal.
     var emotion = new TUDelft.Gamygdala.Emotion(null,null);
-    if (desirability >= 0){
-        if(relation.like >= 0){
-            emotion.name = 'happy-for';
+    if (desirability &gt;= 0){
+        if(relation.like &gt;= 0){
+            emotion.name = &#x27;happy-for&#x27;;
         }
         else {
-            emotion.name = 'resentment';   
+            emotion.name = &#x27;resentment&#x27;;   
         }
     }
     else {
-        if (relation.like >= 0){
-            emotion.name = 'pity';   
+        if (relation.like &gt;= 0){
+            emotion.name = &#x27;pity&#x27;;   
         }
         else {
-            emotion.name = 'gloating';   
+            emotion.name = &#x27;gloating&#x27;;   
         }
     }
     emotion.intensity = Math.abs(utility * deltaLikelihood * relation.like);
@@ -451,7 +539,7 @@ TUDelft.Gamygdala.prototype.evaluateSocialEmotion = function(utility, desirabili
 }
 
 TUDelft.Gamygdala.prototype.agentActions = function(affectedName, causalName, selfName, desirability, utility, deltaLikelihood){
-	if (causalName!=null && causalName!=''){
+	if (causalName!=null &amp;&amp; causalName!=&#x27;&#x27;){
 		//If the causal agent is null or empty, then we we assume the event was not caused by an agent.
 		//There are three cases here.
 		//The affected agent is SELF and causal agent is other.
@@ -459,13 +547,13 @@ TUDelft.Gamygdala.prototype.agentActions = function(affectedName, causalName, se
 		//The affected agent is OTHER and causal agent is SELF.
 		var emotion = new TUDelft.Gamygdala.Emotion(null,null);
 		var relation;
-		if(affectedName === selfName && selfName != causalName){
+		if(affectedName === selfName &amp;&amp; selfName != causalName){
 			//Case one 
-			if(desirability >= 0){
-				emotion.name = 'gratitude';
+			if(desirability &gt;= 0){
+				emotion.name = &#x27;gratitude&#x27;;
 			}
 			else {
-				emotion.name = 'anger';  
+				emotion.name = &#x27;anger&#x27;;  
 			}
 			emotion.intensity = Math.abs(utility * deltaLikelihood);
 			var self = this.getAgentByName(selfName);
@@ -478,26 +566,26 @@ TUDelft.Gamygdala.prototype.agentActions = function(affectedName, causalName, se
 			relation.addEmotion(emotion);
 			self.updateEmotionalState(emotion);  //also add relation emotion the emotion to the emotional state
 		}
-		if(affectedName === selfName && selfName === causalName){
+		if(affectedName === selfName &amp;&amp; selfName === causalName){
 			//Case two
 			//This case is not included in TUDelft.Gamygdala.
 		}
-		if(affectedName != selfName && causalName === selfName){
+		if(affectedName != selfName &amp;&amp; causalName === selfName){
 			//Case three
 			relation;
 			if( this.getAgentByName(causalName).hasRelationWith(affectedName)){
 				relation = this.getAgentByName(causalName).getRelation(affectedName);   
-				if(desirability >= 0){
-					if(relation.like >= 0){
-						emotion.name = 'gratification';
+				if(desirability &gt;= 0){
+					if(relation.like &gt;= 0){
+						emotion.name = &#x27;gratification&#x27;;
 						emotion.intensity = Math.abs(utility * deltaLikelihood * relation.like);
 						relation.addEmotion(emotion);
 						this.getAgentByName(causalName).updateEmotionalState(emotion);  //also add relation emotion the emotion to the emotional state
 					}
 				}
 				else {
-					if(relation.like >= 0){
-						emotion.name = 'remorse';  
+					if(relation.like &gt;= 0){
+						emotion.name = &#x27;remorse&#x27;;  
 						emotion.intensity = Math.abs(utility * deltaLikelihood * relation.like);
 						relation.addEmotion(emotion);
 						this.getAgentByName(causalName).updateEmotionalState(emotion);  //also add relation emotion the emotion to the emotional state
@@ -553,26 +641,26 @@ TUDelft.Gamygdala.Agent = function(name){
 	this.gamygdalaInstance;
 	
 	this.mapPAD=[];
-	this.mapPAD['distress']=[-0.61,0.28,-0.36];
-	this.mapPAD['fear']=[-0.64,0.6,-0.43];
-	this.mapPAD['hope']=[0.51,0.23,0.14];
-	this.mapPAD['joy']=[0.76,.48,0.35];
-	this.mapPAD['satisfaction']=[0.87,0.2,0.62];
-	this.mapPAD['fear-confirmed']=[-0.61,0.06,-0.32];//defeated
-	this.mapPAD['disappointment']=[-0.61,-0.15,-0.29];
-	this.mapPAD['relief']=[0.29,-0.19,-0.28];
-	this.mapPAD['happy-for']=[0.64,0.35,0.25];
-	this.mapPAD['resentment']=[-0.35,0.35,0.29];
-	this.mapPAD['pity']=[-0.52,0.02,-0.21];//regretful
-	this.mapPAD['gloating']=[-0.45,0.48,0.42];//cruel
-	this.mapPAD['gratitude']=[0.64,0.16,-0.21];//grateful
-	this.mapPAD['anger']=[-0.51,0.59,0.25];
-	this.mapPAD['gratification']=[0.69,0.57,0.63];//triumphant
-	this.mapPAD['remorse']=[-0.57,0.28,-0.34];//guilty
+	this.mapPAD[&#x27;distress&#x27;]=[-0.61,0.28,-0.36];
+	this.mapPAD[&#x27;fear&#x27;]=[-0.64,0.6,-0.43];
+	this.mapPAD[&#x27;hope&#x27;]=[0.51,0.23,0.14];
+	this.mapPAD[&#x27;joy&#x27;]=[0.76,.48,0.35];
+	this.mapPAD[&#x27;satisfaction&#x27;]=[0.87,0.2,0.62];
+	this.mapPAD[&#x27;fear-confirmed&#x27;]=[-0.61,0.06,-0.32];//defeated
+	this.mapPAD[&#x27;disappointment&#x27;]=[-0.61,-0.15,-0.29];
+	this.mapPAD[&#x27;relief&#x27;]=[0.29,-0.19,-0.28];
+	this.mapPAD[&#x27;happy-for&#x27;]=[0.64,0.35,0.25];
+	this.mapPAD[&#x27;resentment&#x27;]=[-0.35,0.35,0.29];
+	this.mapPAD[&#x27;pity&#x27;]=[-0.52,0.02,-0.21];//regretful
+	this.mapPAD[&#x27;gloating&#x27;]=[-0.45,0.48,0.42];//cruel
+	this.mapPAD[&#x27;gratitude&#x27;]=[0.64,0.16,-0.21];//grateful
+	this.mapPAD[&#x27;anger&#x27;]=[-0.51,0.59,0.25];
+	this.mapPAD[&#x27;gratification&#x27;]=[0.69,0.57,0.63];//triumphant
+	this.mapPAD[&#x27;remorse&#x27;]=[-0.57,0.28,-0.34];//guilty
 	
 };
 /**
-* Adds a goal to this agent's goal list (so this agent becomes an owner of the goal)
+* Adds a goal to this agent&#x27;s goal list (so this agent becomes an owner of the goal)
 * @method TUDelft.Gamygdala.Agent.addGoal
 * @param {TUDelft.Gamygdala.Goal} goal The goal to be added.
 */
@@ -582,13 +670,13 @@ TUDelft.Gamygdala.Agent.prototype.addGoal = function(goal) {
     this.goals.push(goal);   
 };
 /**
-* Adds a goal to this agent's goal list (so this agent becomes an owner of the goal)
+* Adds a goal to this agent&#x27;s goal list (so this agent becomes an owner of the goal)
 * @method TUDelft.Gamygdala.Agent.removeGoal
 * @param {String} goalName The name of the goal to be added. 
 * @return {boolean} True if the goal could be removed, false otherwise.
 */
 TUDelft.Gamygdala.Agent.prototype.removeGoal = function(goalName){
-    for(var i = 0; i < this.goals.length; i++){
+    for(var i = 0; i &lt; this.goals.length; i++){
         if(this.goals[i].name === goalName){
             this.goals.splice(i, 1);
             return true;
@@ -612,7 +700,7 @@ TUDelft.Gamygdala.Agent.prototype.hasGoal= function(goalName){
 * @return {TUDelft.Gamygdala.Goal} the reference to the goal.
 */
 TUDelft.Gamygdala.Agent.prototype.getGoalByName = function(goalName){
-   for(var i = 0; i < this.goals.length; i++){
+   for(var i = 0; i &lt; this.goals.length; i++){
         if(this.goals[i].name === goalName){
             return this.goals[i];
         }
@@ -626,8 +714,8 @@ TUDelft.Gamygdala.Agent.prototype.getGoalByName = function(goalName){
 * @param {double} gain The gain value [0 and 20].
 */
 TUDelft.Gamygdala.Agent.prototype.setGain = function(gain){
-	if (gain<=0 || gain>20)
-		console.log('Error: gain factor for appraisal integration must be between 0 and 20');
+	if (gain&lt;=0 || gain&gt;20)
+		console.log(&#x27;Error: gain factor for appraisal integration must be between 0 and 20&#x27;);
 	else
 		this.gain=gain;
 }
@@ -642,7 +730,7 @@ TUDelft.Gamygdala.Agent.prototype.appraise = function(belief){
 }
 
 TUDelft.Gamygdala.Agent.prototype.updateEmotionalState = function(emotion){
-	for(var i = 0; i < this.internalState.length; i++){
+	for(var i = 0; i &lt; this.internalState.length; i++){
         if(this.internalState[i].name === emotion.name){
             //Appraisals simply add to the old value of the emotion
 			//So repeated appraisals without decay will result in the sum of the appraisals over time
@@ -667,7 +755,7 @@ TUDelft.Gamygdala.Agent.prototype.getEmotionalState = function(useGain){
 	if (useGain){
 		var gainState=[];
 		
-		for (var i=0;i<this.internalState.length;i++){
+		for (var i=0;i&lt;this.internalState.length;i++){
 			var gainEmo=(this.gain*this.internalState[i].intensity)/(this.gain*this.internalState[i].intensity+1);
 			gainState.push(new TUDelft.Gamygdala.Emotion(this.internalState[i].name, gainEmo));
 		}
@@ -691,15 +779,15 @@ TUDelft.Gamygdala.Agent.prototype.getPADState = function(useGain){
 	PAD[1]=0;
 	PAD[2]=0;
 	
-	for (var i=0;i<this.internalState.length;i++){
+	for (var i=0;i&lt;this.internalState.length;i++){
 		PAD[0]+=(this.internalState[i].intensity*this.mapPAD[this.internalState[i].name][0]);
 		PAD[1]+=(this.internalState[i].intensity*this.mapPAD[this.internalState[i].name][1]);
 		PAD[2]+=(this.internalState[i].intensity*this.mapPAD[this.internalState[i].name][2]);
 	}
 	if (useGain){
-		PAD[0]=(PAD[0]>=0?this.gain*PAD[0]/(this.gain*PAD[0]+1):-this.gain*PAD[0]/(this.gain*PAD[0]-1));
-		PAD[1]=(PAD[1]>=0?this.gain*PAD[1]/(this.gain*PAD[1]+1):-this.gain*PAD[1]/(this.gain*PAD[1]-1));
-		PAD[2]=(PAD[2]>=0?this.gain*PAD[2]/(this.gain*PAD[2]+1):-this.gain*PAD[2]/(this.gain*PAD[2]-1));
+		PAD[0]=(PAD[0]&gt;=0?this.gain*PAD[0]/(this.gain*PAD[0]+1):-this.gain*PAD[0]/(this.gain*PAD[0]-1));
+		PAD[1]=(PAD[1]&gt;=0?this.gain*PAD[1]/(this.gain*PAD[1]+1):-this.gain*PAD[1]/(this.gain*PAD[1]-1));
+		PAD[2]=(PAD[2]&gt;=0?this.gain*PAD[2]/(this.gain*PAD[2]+1):-this.gain*PAD[2]/(this.gain*PAD[2]-1));
 		return PAD;
 	} else
 		return PAD;   
@@ -713,13 +801,13 @@ TUDelft.Gamygdala.Agent.prototype.getPADState = function(useGain){
 * @param {boolean} useGain Whether to use the gain function or not.
 */
 TUDelft.Gamygdala.Agent.prototype.printEmotionalState = function(useGain){
-	var output=this.name + ' feels ';
+	var output=this.name + &#x27; feels &#x27;;
 	var i;
 	var emotionalState=this.getEmotionalState(useGain);
-	for (i=0;i<emotionalState.length; i++){
-		output+=emotionalState[i].name+":"+emotionalState[i].intensity+", ";
+	for (i=0;i&lt;emotionalState.length; i++){
+		output+=emotionalState[i].name+&quot;:&quot;+emotionalState[i].intensity+&quot;, &quot;;
 	}
-	if (i>0)
+	if (i&gt;0)
 		console.log(output);
 }
 
@@ -735,7 +823,7 @@ TUDelft.Gamygdala.Agent.prototype.updateRelation = function(agentName, like){
          this.currentRelations.push(new TUDelft.Gamygdala.Relation(agentName,like));   
     }else {
         //The relation already exists, update it.
-        for(var i = 0; i < this.currentRelations.length; i++){
+        for(var i = 0; i &lt; this.currentRelations.length; i++){
             if(this.currentRelations[i].agentName === agentName){
                 this.currentRelations[i].like = like;
             }
@@ -758,7 +846,7 @@ TUDelft.Gamygdala.Agent.prototype.hasRelationWith = function (agentName){
 * @param {TUDelft.Gamygdala.Relation} The relation object or null if non existing.
 */
 TUDelft.Gamygdala.Agent.prototype.getRelation = function (agentName){
-    for(var i = 0; i < this.currentRelations.length; i++){
+    for(var i = 0; i &lt; this.currentRelations.length; i++){
         if(this.currentRelations[i].agentName === agentName){
             return this.currentRelations[i];    
         }
@@ -771,20 +859,20 @@ TUDelft.Gamygdala.Agent.prototype.getRelation = function (agentName){
 * @param {String} [agentName] The agent who is the target of the relation will only be printed, or when omitted all relations are printed.
 */
 TUDelft.Gamygdala.Agent.prototype.printRelations = function (agentName){
-	var output=this.name+ ' has the following sentiments:\n   ';
+	var output=this.name+ &#x27; has the following sentiments:\n   &#x27;;
 	var i;
 	var found=false;
-    for(i = 0; i < this.currentRelations.length; i++){
+    for(i = 0; i &lt; this.currentRelations.length; i++){
 		
         if(agentName==null || this.currentRelations[i].agentName === agentName){
-            for (var j=0;j<this.currentRelations[i].emotionList.length;j++){
-				output+=this.currentRelations[i].emotionList[j].name+'('+this.currentRelations[i].emotionList[j].intensity+') ';    
+            for (var j=0;j&lt;this.currentRelations[i].emotionList.length;j++){
+				output+=this.currentRelations[i].emotionList[j].name+&#x27;(&#x27;+this.currentRelations[i].emotionList[j].intensity+&#x27;) &#x27;;    
 				found=true;
 			}
         }
-		output+=' for '+this.currentRelations[i].agentName;
-		if (i<this.currentRelations.length-1)
-			 output+=', and\n   ';
+		output+=&#x27; for &#x27;+this.currentRelations[i].agentName;
+		if (i&lt;this.currentRelations.length-1)
+			 output+=&#x27;, and\n   &#x27;;
     } 
 	if (found)
 		console.log(output);
@@ -794,20 +882,20 @@ TUDelft.Gamygdala.Agent.prototype.printRelations = function (agentName){
 * Typically this is called automatically when you use startDecay() in Gamygdala, but you can use it yourself if you want to manage the timing.
 * This function is keeping track of the millis passed since the last call, and will (try to) keep the decay close to the desired decay factor, regardless the time passed
 * So you can call this any time you want (or, e.g., have the game loop call it, or have e.g., Phaser call it in the plugin update, which is default now).
-* Further, if you want to tweak the emotional intensity decay of individual agents, you should tweak the decayFactor per agent not the "frame rate" of the decay (as this doesn't change the rate).
+* Further, if you want to tweak the emotional intensity decay of individual agents, you should tweak the decayFactor per agent not the &quot;frame rate&quot; of the decay (as this doesn&#x27;t change the rate).
 * @method TUDelft.Gamygdala.decayAll
 * @param {TUDelft.Gamygdala} gamygdalaInstance A reference to the correct gamygdala instance that contains the decayFunction property to be used )(so you could use different gamygdala instances to manage different groups of  agents)
 */
 TUDelft.Gamygdala.Agent.prototype.decay = function(gamygdalaInstance){
-    for(var i= 0; i < this.internalState.length; i++){
+    for(var i= 0; i &lt; this.internalState.length; i++){
 		var newIntensity=gamygdalaInstance.decayFunction(this.internalState[i].intensity);
-        if( newIntensity < 0){
+        if( newIntensity &lt; 0){
             this.internalState.splice(i,1);   
         } else{
             this.internalState[i].intensity = newIntensity;   
         }
     }
-    for (var i=0;i<this.currentRelations.length;i++)
+    for (var i=0;i&lt;this.currentRelations.length;i++)
 		this.currentRelations[i].decay(gamygdalaInstance);
 };
 
@@ -831,7 +919,7 @@ TUDelft.Gamygdala.Agent.prototype.decay = function(gamygdalaInstance){
 
 /**
 * This is the class that represents a relation one agent has with other agents.
-* It's main role is to store and manage the emotions felt for a target agent (e.g angry at, or pity for).
+* It&#x27;s main role is to store and manage the emotions felt for a target agent (e.g angry at, or pity for).
 * Each agent maintains a list of relations, one relation for each target agent.
 * @class TUDelft.Gamygdala.Relation
 * @constructor 
@@ -846,11 +934,11 @@ TUDelft.Gamygdala.Relation = function (targetName, like) {
 
 TUDelft.Gamygdala.Relation.prototype.addEmotion = function(emotion) {
     var added = false;
-    for (var i = 0; i < this.emotionList.length; i++){
+    for (var i = 0; i &lt; this.emotionList.length; i++){
         if (this.emotionList[i].name === emotion.name){
 			/*
 			
-            if (this.emotionList[i].intensity < emotion.intensity){
+            if (this.emotionList[i].intensity &lt; emotion.intensity){
                 this.emotionList[i].intensity = emotion.intensity;
             }*/
 			this.emotionList[i].intensity += emotion.intensity;
@@ -864,10 +952,10 @@ TUDelft.Gamygdala.Relation.prototype.addEmotion = function(emotion) {
 };
 
 TUDelft.Gamygdala.Relation.prototype.decay = function(gamygdalaInstance){
-    for (var i = 0; i < this.emotionList.length; i++){
+    for (var i = 0; i &lt; this.emotionList.length; i++){
 		var newIntensity=gamygdalaInstance.decayFunction(this.emotionList[i].intensity);
 		
-        if (newIntensity < 0){
+        if (newIntensity &lt; 0){
             //This emotion has decayed below zero, we need to remove it.
             this.emotionList.splice(i, 1);
         } 
@@ -885,14 +973,14 @@ TUDelft.Gamygdala.Relation.prototype.decay = function(gamygdalaInstance){
 * @class  TUDelft.Gamygdala.Belief
 * @constructor
 * @param {double} likelihood The likelihood of this belief to be true.
-* @param {String} causalAgentName The agent's name of the causal agent of this belief.
-* @param {String[]} affectedGoalNames An array of affected goals' names.
-* @param {double[]} goalCongruences An array of the affected goals' congruences (i.e., the extend to which this event is good or bad for a goal [-1,1]).
-* @param {boolean} [isIncremental] Incremental evidence enforces gamygdala to see this event as incremental evidence for (or against) the list of goals provided, i.e, it will add or subtract this belief's likelihood*congruence from the goal likelihood instead of using the belief as "state" defining the absolute likelihood
+* @param {String} causalAgentName The agent&#x27;s name of the causal agent of this belief.
+* @param {String[]} affectedGoalNames An array of affected goals&#x27; names.
+* @param {double[]} goalCongruences An array of the affected goals&#x27; congruences (i.e., the extend to which this event is good or bad for a goal [-1,1]).
+* @param {boolean} [isIncremental] Incremental evidence enforces gamygdala to see this event as incremental evidence for (or against) the list of goals provided, i.e, it will add or subtract this belief&#x27;s likelihood*congruence from the goal likelihood instead of using the belief as &quot;state&quot; defining the absolute likelihood
 */
 TUDelft.Gamygdala.Belief = function(likelihood, causalAgentName, affectedGoalNames, goalCongruences, isIncremental) {
 	if (isIncremental)
-		this.isIncremental=isIncremental;//incremental evidence enforces gamygdala to use the likelihood as delta, i.e, it will add or subtract this belief's likelihood from the goal likelihood instead of using the belief as "state" defining the absolute likelihood
+		this.isIncremental=isIncremental;//incremental evidence enforces gamygdala to use the likelihood as delta, i.e, it will add or subtract this belief&#x27;s likelihood from the goal likelihood instead of using the belief as &quot;state&quot; defining the absolute likelihood
     else
 		this.isIncremental=false;
 	this.likelihood = Math.min(1,Math.max(-1,likelihood));
@@ -901,10 +989,10 @@ TUDelft.Gamygdala.Belief = function(likelihood, causalAgentName, affectedGoalNam
     this.goalCongruences = [];
 	
 	//copy on keep
-    for(var i = 0; i < affectedGoalNames.length; i++){
+    for(var i = 0; i &lt; affectedGoalNames.length; i++){
         this.affectedGoalNames.push(affectedGoalNames[i]);   
     }
-    for(var i = 0; i < goalCongruences.length; i++){
+    for(var i = 0; i &lt; goalCongruences.length; i++){
         this.goalCongruences.push(Math.min(1,Math.max(-1,goalCongruences[i])));   
     }
 };
@@ -940,13 +1028,13 @@ TUDelft.Gamygdala.Emotion = function (name, intensity) {
 
 
 /**
-* This class is mainly a data structure to store a goal with it's utility and likelihood of being achieved
+* This class is mainly a data structure to store a goal with it&#x27;s utility and likelihood of being achieved
 * This is used as basis for interpreting Beliefs
 * @class TUDelft.Gamygdala.Goal
 * @constructor
 * @param {String} name The name of the goal
 * @param {double} utility The utility of the goal
-* @param {boolean} [isMaintenanceGoal] Defines if the goal is a maintenance goal or not. The default is that the goal is an achievement goal, i.e., a goal that once it's likelihood reaches true (1) or false (-1) stays that way.
+* @param {boolean} [isMaintenanceGoal] Defines if the goal is a maintenance goal or not. The default is that the goal is an achievement goal, i.e., a goal that once it&#x27;s likelihood reaches true (1) or false (-1) stays that way.
 */
 TUDelft.Gamygdala.Goal = function(name, utility, isMaintenanceGoal){
     this.name = name;
@@ -958,3 +1046,22 @@ TUDelft.Gamygdala.Goal = function(name, utility, isMaintenanceGoal){
 		this.isMaintenanceGoal=false;
 }
 
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

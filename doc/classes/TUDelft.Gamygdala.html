@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>TUDelft.Gamygdala</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Phaser.Plugin.GamygdalaExpression.html">Phaser.Plugin.GamygdalaExpression</a></li>
+                                <li><a href="../classes/Phaser.Plugin.GamygdalaWrapper.html">Phaser.Plugin.GamygdalaWrapper</a></li>
+                                <li><a href="../classes/TUDelft.Gamygdala.html">TUDelft.Gamygdala</a></li>
+                                <li><a href="../classes/TUDelft.Gamygdala.Agent.html">TUDelft.Gamygdala.Agent</a></li>
+                                <li><a href="../classes/TUDelft.Gamygdala.Belief.html">TUDelft.Gamygdala.Belief</a></li>
+                                <li><a href="../classes/TUDelft.Gamygdala.Emotion.html">TUDelft.Gamygdala.Emotion</a></li>
+                                <li><a href="../classes/TUDelft.Gamygdala.Goal.html">TUDelft.Gamygdala.Goal</a></li>
+                                <li><a href="../classes/TUDelft.Gamygdala.Relation.html">TUDelft.Gamygdala.Relation</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1>TUDelft.Gamygdala Class</h1>
+<div class="box meta">
+
+
+        <div class="foundat">
+            Defined in: <a href="../files/Gamygdala.js.html#l8"><code>Gamygdala.js:8</code></a>
+        </div>
+
+
+</div>
+
+
+<div class="box intro">
+    <p>This is the main appraisal engine class taking care of interpreting a situation emotionally. Typically you create one instance of this class and then register all agents (emotional entities) to it, as well as all goals.</p>
+
+</div>
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_TUDelft.Gamygdala" class="method item">
+            <h3 class="name"><code>TUDelft.Gamygdala</code></h3>
+        
+                <span class="paren">()</span>
+        
+        
+        
+        
+        
+        
+        
+        
+            <div class="meta">
+                        <p>
+                        Defined in
+                <a href="../files/Gamygdala.js.html#l8"><code>Gamygdala.js:8</code></a>
+                </p>
+        
+        
+        
+            </div>
+        
+            <div class="description">
+                
+            </div>
+        
+        
+        
+        
+        </div>
+    </div>
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.appraise">TUDelft.Gamygdala.appraise</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.appraiseBelief">TUDelft.Gamygdala.appraiseBelief</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.createAgent">TUDelft.Gamygdala.createAgent</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.createGoalForAgent">TUDelft.Gamygdala.createGoalForAgent</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.createRelation">TUDelft.Gamygdala.createRelation</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.decayAll">TUDelft.Gamygdala.decayAll</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.exponentialDecay">TUDelft.Gamygdala.exponentialDecay</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.getAgentByName">TUDelft.Gamygdala.getAgentByName</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.getGoalByName">TUDelft.Gamygdala.getGoalByName</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.linearDecay">TUDelft.Gamygdala.linearDecay</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.printAllEmotions">TUDelft.Gamygdala.printAllEmotions</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.registerAgent">TUDelft.Gamygdala.registerAgent</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.registerGoal">TUDelft.Gamygdala.registerGoal</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.setDecay">TUDelft.Gamygdala.setDecay</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TUDelft.Gamygdala.setGain">TUDelft.Gamygdala.setGain</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_TUDelft.Gamygdala.appraise" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.appraise</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>belief</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[affectedAgent]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l212"><code>Gamygdala.js:212</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>This method is the main emotional interpretation logic entry point. It performs the complete appraisal of a single event (belief) for all agents (affectedAgent=null) or for only one agent (affectedAgent=true)
+if affectedAgent is set, then the complete appraisal logic is executed including the effect on relations (possibly influencing the emotional state of other agents),
+but only if the affected agent (the one owning the goal) == affectedAgent
+this is sometimes needed for efficiency, if you as a game developer know that particular agents can never appraise an event, then you can force Gamygdala to only look at a subset of agents.
+Gamygdala assumes that the affectedAgent is indeed the only goal owner affected, that the belief is well-formed, and will not perform any checks, nor use Gamygdala&#39;s list of known goals to find other agents that share this goal (!!!)</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">belief</code>
+                        <span class="type"><a href="../classes/TUDelft.Gamygdala.Belief.html" class="crosslink">TUDelft.Gamygdala.Belief</a></span>
+
+
+                    <div class="param-description">
+                        <p>The current event, in the form of a Belief object, to be appraised</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[affectedAgent]</code>
+                        <span class="type"><a href="../classes/TUDelft.Gamygdala.Agent.html" class="crosslink">TUDelft.Gamygdala.Agent</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>The reference to the agent who needs to appraise the event. If given, this is the appraisal perspective (see explanation above).</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_TUDelft.Gamygdala.appraiseBelief" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.appraiseBelief</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>likelihood</code>
+                </li>
+                <li class="arg">
+                        <code>causalAgentName</code>
+                </li>
+                <li class="arg">
+                        <code>affectedGoalNames</code>
+                </li>
+                <li class="arg">
+                        <code>goalCongruences</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[isIncremental]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l89"><code>Gamygdala.js:89</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>A facilitator method to appraise an event. It takes in the same as what the new Belief(...) takes in, creates a belief and appraises it for all agents that are registered.
+This method is thus handy if you want to keep all gamygdala logic internal to Gamygdala.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">likelihood</code>
+                        <span class="type">Double</span>
+
+
+                    <div class="param-description">
+                        <p>The likelihood of this belief to be true.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">causalAgentName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The agent&#39;s name of the causal agent of this belief.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">affectedGoalNames</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>An array of affected goals&#39; names.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">goalCongruences</code>
+                        <span class="type">Double</span>
+
+
+                    <div class="param-description">
+                        <p>An array of the affected goals&#39; congruences (i.e., the extend to which this event is good or bad for a goal [-1,1]).</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[isIncremental]</code>
+                        <span class="type">Boolean</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>Incremental evidence enforces gamygdala to see this event as incremental evidence for (or against) the list of goals provided, i.e, it will add or subtract this belief&#39;s likelihood*congruence from the goal likelihood instead of using the belief as &quot;state&quot; defining the absolute likelihood</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_TUDelft.Gamygdala.createAgent" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.createAgent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>agentName</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/TUDelft.Gamygdala.Agent.html" class="crosslink">TUDelft.Gamygdala.Agent</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l25"><code>Gamygdala.js:25</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>A facilitator method that creates a new Agent and registers it for you</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">agentName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The agent with agentName is created</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="../classes/TUDelft.Gamygdala.Agent.html" class="crosslink">TUDelft.Gamygdala.Agent</a></span>:
+                    <p>An agent reference to the newly created agent</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_TUDelft.Gamygdala.createGoalForAgent" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.createGoalForAgent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>agentName</code>
+                </li>
+                <li class="arg">
+                        <code>goalName</code>
+                </li>
+                <li class="arg">
+                        <code>goalUtility</code>
+                </li>
+                <li class="arg">
+                        <code>isMaintenanceGoal</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/TUDelft.Gamygdala.Goal.html" class="crosslink">TUDelft.Gamygdala.Goal</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l39"><code>Gamygdala.js:39</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>A facilitator method to create a goal for a particular agent, that also registers the goal to the agent and gamygdala.
+This method is thus handy if you want to keep all gamygdala logic internal to Gamygdala.
+However, if you want to do more sophisticated stuff (e.g., goals for multiple agents, keep track of your own list of goals to also remove them, appraise events per agent without the need for gamygdala to keep track of goals, etc...) this method will probably be doing too much.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">agentName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The agent&#39;s name to which the newly created goal has to be added.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">goalName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The goal&#39;s name.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">goalUtility</code>
+                        <span class="type">Double</span>
+
+
+                    <div class="param-description">
+                        <p>The goal&#39;s utility.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">isMaintenanceGoal</code>
+                        <span class="type">Boolean</span>
+
+
+                    <div class="param-description">
+                        <p>Defines if the goal is a maintenance goal or not [optional]. The default is that the goal is an achievement goal, i.e., a goal that once it&#39;s likelihood reaches true (1) or false (-1) stays that way.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="../classes/TUDelft.Gamygdala.Goal.html" class="crosslink">TUDelft.Gamygdala.Goal</a></span>:
+                    <ul>
+<li>a goal reference to the newly created goal.</li>
+</ul>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_TUDelft.Gamygdala.createRelation" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.createRelation</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>sourceName</code>
+                </li>
+                <li class="arg">
+                        <code>targetName</code>
+                </li>
+                <li class="arg">
+                        <code>relation</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l71"><code>Gamygdala.js:71</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>A facilitator method to create a relation between two agents. Both source and target have to exist and be registered with this Gamygdala instance.
+This method is thus handy if you want to keep all gamygdala logic internal to Gamygdala.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">sourceName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The agent who has the relation (the source)</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">targetName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The agent who is the target of the relation (the target)</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">relation</code>
+                        <span class="type">Double</span>
+
+
+                    <div class="param-description">
+                        <p>The relation (between -1 and 1).</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_TUDelft.Gamygdala.decayAll" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.decayAll</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l320"><code>Gamygdala.js:320</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>This method decays for all registered agents the emotional state and relations. It performs the decay according to the time passed, so longer intervals between consecutive calls result in bigger clunky steps.
+Typically this is called automatically when you use startDecay(), but you can use it yourself if you want to manage the timing.
+This function is keeping track of the millis passed since the last call, and will (try to) keep the decay close to the desired decay factor, regardless the time passed
+So you can call this any time you want (or, e.g., have the game loop call it, or have e.g., Phaser call it in the plugin update, which is default now).
+Further, if you want to tweak the emotional intensity decay of individual agents, you should tweak the decayFactor per agent not the &quot;frame rate&quot; of the decay (as this doesn&#39;t change the rate).</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_TUDelft.Gamygdala.exponentialDecay" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.exponentialDecay</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l522"><code>Gamygdala.js:522</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>You can set Gamygdala to use this function for all emotion decay by calling setDecay() and passing this function as second parameter. This function is not to be called directly.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_TUDelft.Gamygdala.getAgentByName" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.getAgentByName</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>agentName</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/TUDelft.Gamygdala.Agent.html" class="crosslink">TUDelft.Gamygdala.Agent</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l166"><code>Gamygdala.js:166</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Simple agent getter by name.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">agentName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The name of the agent to be found.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="../classes/TUDelft.Gamygdala.Agent.html" class="crosslink">TUDelft.Gamygdala.Agent</a></span>:
+                    <p>null or an agent reference that has the name property equal to the agentName argument</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_TUDelft.Gamygdala.getGoalByName" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.getGoalByName</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>goalName</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/TUDelft.Gamygdala.Goal.html" class="crosslink">TUDelft.Gamygdala.Goal</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l197"><code>Gamygdala.js:197</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Simple goal getter by name.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">goalName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The name of the goal to be found.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="../classes/TUDelft.Gamygdala.Goal.html" class="crosslink">TUDelft.Gamygdala.Goal</a></span>:
+                    <p>null or a goal reference that has the name property equal to the goalName argument</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_TUDelft.Gamygdala.linearDecay" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.linearDecay</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l513"><code>Gamygdala.js:513</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>You can set Gamygdala to use this function for all emotion decay by calling setDecay() and passing this function as second parameter. This function is not to be called directly.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_TUDelft.Gamygdala.printAllEmotions" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.printAllEmotions</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>gain</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l103"><code>Gamygdala.js:103</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Facilitator method to print all emotional states to the console.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">gain</code>
+                        <span class="type">Boolean</span>
+
+
+                    <div class="param-description">
+                        <p>Whether you want to print the gained (true) emotional states or non-gained (false).</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_TUDelft.Gamygdala.registerAgent" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.registerAgent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>agent</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l155"><code>Gamygdala.js:155</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>For every entity in your game (usually NPC&#39;s, but can be the player character too) you have to first create an Agent object and then register it using this method.
+Registering the agent makes sure that Gamygdala will be able to emotionally interpret incoming Beliefs about the game state for that agent.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">agent</code>
+                        <span class="type"><a href="../classes/TUDelft.Gamygdala.Agent.html" class="crosslink">TUDelft.Gamygdala.Agent</a></span>
+
+
+                    <div class="param-description">
+                        <p>The agent to be registered</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_TUDelft.Gamygdala.registerGoal" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.registerGoal</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>goal</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l183"><code>Gamygdala.js:183</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>For every goal that NPC&#39;s or player characters can have you have to first create a Goal object and then register it using this method.
+Registering the goals makes sure that Gamygdala will be able to find the correct goal references when a Beliefs about the game state comes in.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">goal</code>
+                        <span class="type"><a href="../classes/TUDelft.Gamygdala.Goal.html" class="crosslink">TUDelft.Gamygdala.Goal</a></span>
+
+
+                    <div class="param-description">
+                        <p>The goal to be registered.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_TUDelft.Gamygdala.setDecay" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.setDecay</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>decayFactor</code>
+                </li>
+                <li class="arg">
+                        <code>decayFunction</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l127"><code>Gamygdala.js:127</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Sets the decay factor and function for emotional decay.
+It sets the decay factor and type for emotional decay, so that an emotion will slowly get lower in intensity.
+Whenever decayAll is called, all emotions for all agents are decayed according to the factor and function set here.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">decayFactor</code>
+                        <span class="type">Double</span>
+
+
+                    <div class="param-description">
+                        <p>The decayfactor used. A factor of 1 means no decay, a factor</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">decayFunction</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>The decay function tobe used. choose between linearDecay or exponentialDecay (see the corresponding methods)</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_TUDelft.Gamygdala.setGain" class="method item">
+    <h3 class="name"><code>TUDelft.Gamygdala.setGain</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>gain</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Gamygdala.js.html#l115"><code>Gamygdala.js:115</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Facilitator to set the gain for the whole set of agents known to TUDelft.Gamygdala.
+For more realistic, complex games, you would typically set the gain for each agent type separately, to finetune the intensity of the response.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">gain</code>
+                        <span class="type">Double</span>
+
+
+                    <div class="param-description">
+                        <p>The gain value [0 and 20].</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+            </div>
+
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
