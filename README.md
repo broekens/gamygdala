@@ -3,7 +3,9 @@ An emotion engine for games based on the Gamygdala approach (with an eyewink to 
 
 This is the main repository for the Gamygdala emotion engine.
 It is used for emotion simulation in NPCs or player controlled characters in games.
-For now we have luanch the javascript version of the system
+For now we have published the javascript version of the system.
+A c# version and Java version are in development.
+
 For more info visit the website (http://www.joostbroekens.com/gamygdala).
 You can read more there, and run the example code.
 The example code is based on the game engine Phaser from photonstorm (http://www.photonstorm.com/).
