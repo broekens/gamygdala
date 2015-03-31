@@ -243,7 +243,8 @@ TUDelft.Gamygdala.prototype.appraise = function(belief, affectedAgent){
 				//the goal exists, appraise it
 				var utility = currentGoal.utility;
 				var deltaLikelihood = this.calculateDeltaLikelihood(currentGoal, belief.goalCongruences[i], belief.likelihood, belief.isIncremental);
-				var desirability = belief.goalCongruences[i] * utility;
+				//var desirability = belief.goalCongruences[i] * utility;
+				var desirability = deltaLikelihood * utility;
 				if (this.debug)
 					console.log('Evaluated goal: ' + currentGoal.name +'('+utility+', '+deltaLikelihood+')');
 						
@@ -285,8 +286,8 @@ TUDelft.Gamygdala.prototype.appraise = function(belief, affectedAgent){
 			var currentGoal=affectedAgent.getGoalByName(belief.affectedGoalNames[i]);
 			var utility = currentGoal.utility;
 			var deltaLikelihood = this.calculateDeltaLikelihood(currentGoal, belief.goalCongruences[i], belief.likelihood, belief.isIncremental);
-			var desirability = belief.goalCongruences[i] * utility;
-			
+			//var desirability = belief.goalCongruences[i] * utility;
+			var desirability = deltaLikelihood * utility;
 			//assume affectedAgent is the only owner to be considered in this appraisal round.
 			
 			var owner=affectedAgent;
@@ -313,8 +314,10 @@ TUDelft.Gamygdala.prototype.appraise = function(belief, affectedAgent){
 		}
 	}
 	//print the emotions to the console for debugging
-	if (this.debug)
-		emotionEngine.printAllEmotions(true);
+	if (this.debug){
+		emotionEngine.printAllEmotions(false);
+		//emotionEngine.printAllEmotions(true);
+	}
 }
 
 /**
@@ -481,6 +484,7 @@ TUDelft.Gamygdala.prototype.agentActions = function(affectedName, causalName, se
 		if(affectedName === selfName && selfName === causalName){
 			//Case two
 			//This case is not included in TUDelft.Gamygdala.
+			//This should include pride and shame
 		}
 		if(affectedName != selfName && causalName === selfName){
 			//Case three

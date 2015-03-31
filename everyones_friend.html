@@ -136,18 +136,18 @@ function create() {
 	emotionEngine.createGoalForAgent('mcqueen', 'trophy', 1);
 
 	
-	emotionEngine.createGoalForAgent('mario', 'bonusmario', 0.6);
-	emotionEngine.createGoalForAgent('luigi', 'bonusluigi', 0.6);
-	emotionEngine.createGoalForAgent('pacman', 'bonuspacman', 0.6);
-	emotionEngine.createGoalForAgent('ralph', 'bonusralph', 0.6);
-	emotionEngine.createGoalForAgent('mcqueen', 'bonusmcqueen', 0.6);
-	emotionEngine.createGoalForAgent('bowser', 'bonusbowser', 0.6);
+	emotionEngine.createGoalForAgent('mario', 'bonusmario', 0.5);
+	emotionEngine.createGoalForAgent('luigi', 'bonusluigi', 0.5);
+	emotionEngine.createGoalForAgent('pacman', 'bonuspacman', 0.5);
+	emotionEngine.createGoalForAgent('ralph', 'bonusralph', 0.5);
+	emotionEngine.createGoalForAgent('mcqueen', 'bonusmcqueen', 0.5);
+	emotionEngine.createGoalForAgent('bowser', 'bonusbowser', 0.5);
 	
 	emotionEngine.createRelation('mario', 'luigi' , .5);
 	emotionEngine.createRelation('luigi', 'mario' , .5);
 	
-	emotionEngine.createRelation('bowser', 'mario' , -0.5);
-	emotionEngine.createRelation('bowser', 'luigi' , -0.5);
+	emotionEngine.createRelation('bowser', 'mario' , -0.6);
+	emotionEngine.createRelation('bowser', 'luigi' , -0.6);
 	
 	emotionEngine.createRelation('mcqueen', 'ralph' , -0.5);
 	
@@ -206,12 +206,12 @@ function givePrize (pointer, npc) {
 			emotionEngine.appraiseBelief(1, null , ['winstarsb'], [1]);
 			emotionEngine.appraiseBelief(1, null , ['winstarsm','winstarsl'], [-0.2, -0.2], true);//incremental
 		}
-		if (npc.emotion.name=='mario' & prizeSelected.name=='star'){
+		if (npc.emotion.name=='mario'){
 			starCount--;
 			emotionEngine.appraiseBelief(1, null , ['winstarsm'], [1]);
 			emotionEngine.appraiseBelief(1, null , ['winstarsb','winstarsl'], [-0.2, -0.2], true);//incremental
 		}
-		if (npc.emotion.name=='luigi' & prizeSelected.name=='star'){
+		if (npc.emotion.name=='luigi'){
 			starCount--;
 			emotionEngine.appraiseBelief(1, null , ['winstarsl'], [1]);
 			emotionEngine.appraiseBelief(1, null , ['winstarsm','winstarsb'], [-0.2, -0.2], true);//incremental
