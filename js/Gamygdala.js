@@ -957,7 +957,7 @@ TUDelft.Gamygdala.Goal = function(name, utility, isMaintenanceGoal){
     this.utility = utility;
     this.likelihood = 0.5; //The likelihood is unknown at the start so it starts in the middle between disconfirmed (0) and confirmed (1)
 	if (isMaintenanceGoal)
-		this.maintenanceGoal=isMaintenanceGoal; //There are maintenance and achievement goals. When an achievement goal is reached (or not), this is definite (e.g., to a the promotion or not). A maintenance goal can become true/false indefinetly (e.g., to be well-fed)
+		this.isMaintenanceGoal=isMaintenanceGoal; //There are maintenance and achievement goals. When an achievement goal is reached (or not), this is definite (e.g., to a the promotion or not). A maintenance goal can become true/false indefinitely (e.g., to be well-fed)
 	else
 		this.isMaintenanceGoal=false;
 }
