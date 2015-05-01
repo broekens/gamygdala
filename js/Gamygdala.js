@@ -759,7 +759,6 @@ TUDelft.Gamygdala.Agent.prototype.hasRelationWith = function (agentName){
 * Returns the relation object this agent has with the agent defined by agentName.
 * @method TUDelft.Gamygdala.Agent.getRelation
 * @param {String} agentName The agent who is the target of the relation.
-* @param {TUDelft.Gamygdala.Relation} The relation object or null if non existing.
 */
 TUDelft.Gamygdala.Agent.prototype.getRelation = function (agentName){
     for(var i = 0; i < this.currentRelations.length; i++){
