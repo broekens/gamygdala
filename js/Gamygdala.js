@@ -315,8 +315,8 @@ TUDelft.Gamygdala.prototype.appraise = function(belief, affectedAgent){
 	}
 	//print the emotions to the console for debugging
 	if (this.debug){
-		emotionEngine.printAllEmotions(false);
-		//emotionEngine.printAllEmotions(true);
+		this.printAllEmotions(false);
+		//this.printAllEmotions(true);
 	}
 }
 
