@@ -472,12 +472,10 @@ TUDelft.Gamygdala.prototype.agentActions = function(affectedName, causalName, se
 			}
 			emotion.intensity = Math.abs(utility * deltaLikelihood);
 			var self = this.getAgentByName(selfName);
-			if(self.hasRelationWith(causalName)){
-				relation = self.getRelation(causalName);          
-			}else{
+			if(!self.hasRelationWith(causalName)){
 				self.updateRelation(causalName, 0.0);
-				relation = self.getRelation(causalName); 
 			}
+			relation = self.getRelation(causalName); 
 			relation.addEmotion(emotion);
 			self.updateEmotionalState(emotion);  //also add relation emotion the emotion to the emotional state
 		}
@@ -491,22 +489,17 @@ TUDelft.Gamygdala.prototype.agentActions = function(affectedName, causalName, se
 			relation;
 			if( this.getAgentByName(causalName).hasRelationWith(affectedName)){
 				relation = this.getAgentByName(causalName).getRelation(affectedName);   
-				if(desirability >= 0){
-					if(relation.like >= 0){
+				
+				if(relation.like >= 0){
+					if(desirability >= 0){
 						emotion.name = 'gratification';
-						emotion.intensity = Math.abs(utility * deltaLikelihood * relation.like);
-						relation.addEmotion(emotion);
-						this.getAgentByName(causalName).updateEmotionalState(emotion);  //also add relation emotion the emotion to the emotional state
 					}
-				}
-				else {
-					if(relation.like >= 0){
+					else {
 						emotion.name = 'remorse';  
-						emotion.intensity = Math.abs(utility * deltaLikelihood * relation.like);
-						relation.addEmotion(emotion);
-						this.getAgentByName(causalName).updateEmotionalState(emotion);  //also add relation emotion the emotion to the emotional state
 					}
-					
+					emotion.intensity = Math.abs(utility * deltaLikelihood * relation.like);
+					relation.addEmotion(emotion);
+					this.getAgentByName(causalName).updateEmotionalState(emotion);  //also add relation emotion the emotion to the emotional state
 				}
 				
 			}   
