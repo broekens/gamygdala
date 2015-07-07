@@ -138,7 +138,7 @@ function create() {
     }
 	//Now add the life bar
 	lifes = game.add.group();
-	for (var i=0;i<3;i++)
+	for (var i=0;i<10;i++)
 	{	lifes.create(16+i*32,50,'life');
 	}
 	
@@ -186,9 +186,10 @@ function create() {
 	for (var i=0;i<bad_guys.countLiving();i++)
 	{	//create the Gamygdala agent and store it in the bad_guy object for easy reference later, because when the player gets hit, we need to tell gamygdala who did it.
 		bad_guys.getAt(i).emotionAgent=emotionEngine.createAgent('monster'+i);
-		//add a relation between player and monster for fun, the first monster hates the player, the second one likes the player, the third hates, etc..
-		emotionEngine.createRelation('monster'+i, 'player',(i%2)*2-1);
-		//add expression to the bad guy so we see something, but we show only the max emotion here as we are only intersted in the CURRENT relation after the random change
+		//add a relation between player and monster for fun, the first monster hates the player a little, the second one likes the player a little, the third hates, etc..
+		emotionEngine.createRelation('monster'+i, 'player',(i%2)*0.2-0.1);
+		
+		//add expression to the bad guy so we see something, but we show only the max emotion here as we are only interested in the CURRENT relation after the random change
 		game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, bad_guys.getAt(i), bad_guys.getAt(i).emotionAgent, true));
 		
 		//note that we don't need to configure goals for these bad guys. They don't need to want to achieve something themselves to have social emotions, they can still feel pity, gloating, etc.. simply due to what happens to the player.
@@ -310,7 +311,10 @@ function collectStar (player, star) {
 	
 	for (var i=0;i<bad_guys.countLiving();i++)
 	{	//reconfigure the relation after each star
-		emotionEngine.createRelation('monster'+i, 'player',Math.random()*2-1);
+		if (bad_guys.getAt(i).emotionAgent.getRelation('player').like>0)
+			bad_guys.getAt(i).emotionAgent.getRelation('player').like=score/10;
+		else
+			bad_guys.getAt(i).emotionAgent.getRelation('player').like=-score/10;
 	}
 	
 	//Add Emotion event, and simply call the main Gamygdala instance and ask it to appraise the event for all agent's it knows. 
@@ -329,10 +333,12 @@ function collectStar (player, star) {
 function hit (player, bad_guy) {
     
     
-	if (hitTimer<=0 && bad_guy.emotionAgent.getRelation('player').like<0){
+	if (hitTimer<=0 && bad_guy.emotionAgent.getRelation('player').like<0.5){//you can't be hit by baddies that grew into friends
 		//  Add and update lives
 		
 		lifes.getFirstAlive().kill();
+		if (bad_guy.emotionAgent.getRelation('player').like<-0.5)//kill a second life if you hit a very angry guy!
+			lifes.getFirstAlive().kill();
 		scoreText.text = 'Score: ' + score;
 		player.body.velocity.y = -150;
 		if (player.body.x < bad_guy.body.x)
@@ -364,7 +370,8 @@ function hit (player, bad_guy) {
 Genre: Emotional Arcade Game<br>
 Goal: Collect all stars without loosing your three lives.<br>
 <br>
-Some monsters like you, others don't. Quickly observe how they feel for you when you eat their stars.<br>
-Beware though, some might change their mind about you when you steal their stars.<br> 
+As you eat stars, monsters will grow to hate or like you. <br>
+Quickly observe how they feel for you when you eat their stars.<br>
+Make friends and foes!.<br> 
 </body>
 </html>
