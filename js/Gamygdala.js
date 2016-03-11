@@ -62,7 +62,7 @@ TUDelft.Gamygdala.prototype.createGoalForAgent = function(agentName, goalName, g
 			tempGoal.isMaintenanceGoal=isMaintenanceGoal;
 		return tempGoal;
 	} else
-	{	console.log("Error: agent with name "+ agentName + " does not exist, so I cannot add a create a goal for it.");
+	{	console.log("Error: agent with name "+ agentName + " does not exist, so I cannot create a goal for it.");
 		return null;
 	}
 	
@@ -133,7 +133,6 @@ TUDelft.Gamygdala.prototype.setGain =function(gain){
 * @param {function} decayFunction The decay function tobe used. choose between linearDecay or exponentialDecay (see the corresponding methods)
 */
 TUDelft.Gamygdala.prototype.setDecay = function(decayFactor, decayFunction){
-	
 	this.decayFunction=decayFunction;
 	this.decayFactor=decayFactor;
 }
@@ -231,7 +230,7 @@ TUDelft.Gamygdala.prototype.appraise = function(belief, affectedAgent){
 		}
 		if (this.goals.length==0){
 			console.log("Warning: no goals registered to Gamygdala, all goals to be considered in appraisal need to be registered.");
-			return false; //The congruence list must be of the same length as the affected goals list.   
+			return false; //No goals registered to GAMYGDALA.   
 		}
 			
 		
@@ -348,13 +347,19 @@ TUDelft.Gamygdala.prototype.calculateDeltaLikelihood = function(goal, congruence
 	var newLikelihood;
 	if (goal.isMaintenanceGoal==false && (oldLikelihood>=1 | oldLikelihood<=-1))
 		return 0;
-	if (isIncremental){
-		newLikelihood = oldLikelihood + likelihood*congruence;
-		newLikelihood=Math.max(Math.min(newLikelihood,1), -1);
+	
+	if (goal.calculateLikelyhood){
+		//if the goal has an associated function to calculate the likelyhood that the goal is true, then use that function, 
+		newLikelihood=goal.calculateLikelyhood();
+	} else {
+		//otherwise use the event encoded updates.
+		if (isIncremental){
+			newLikelihood = oldLikelihood + likelihood*congruence;
+			newLikelihood=Math.max(Math.min(newLikelihood,1), -1);
+		}
+		else
+			newLikelihood = (congruence * likelihood + 1.0)/2.0;
 	}
-	else
-		newLikelihood = (congruence * likelihood + 1.0)/2.0;
-    
 	goal.likelihood=newLikelihood;
     if(oldLikelihood != null){
         return newLikelihood - oldLikelihood;     
@@ -645,6 +650,9 @@ TUDelft.Gamygdala.Agent.prototype.appraise = function(belief){
 	this.gamygdalaInstance.appraise(belief, this);
 }
 
+TUDelft.Gamygdala.Agent.prototype.appraiseGoal = function(goalName, causalAgentName){
+	this.gamygdalaInstance.appraise(new TUDelft.Gamygdala.Belief(1, causalAgentName, [goalName], [1], false), this);
+}
 TUDelft.Gamygdala.Agent.prototype.updateEmotionalState = function(emotion){
 	for(var i = 0; i < this.internalState.length; i++){
         if(this.internalState[i].name === emotion.name){
@@ -951,7 +959,7 @@ TUDelft.Gamygdala.Emotion = function (name, intensity) {
 * @param {double} utility The utility of the goal
 * @param {boolean} [isMaintenanceGoal] Defines if the goal is a maintenance goal or not. The default is that the goal is an achievement goal, i.e., a goal that once it's likelihood reaches true (1) or false (-1) stays that way.
 */
-TUDelft.Gamygdala.Goal = function(name, utility, isMaintenanceGoal){
+TUDelft.Gamygdala.Goal = function(name, utility, isMaintenanceGoal, likelyhoodFunction){
     this.name = name;
     this.utility = utility;
     this.likelihood = 0.5; //The likelihood is unknown at the start so it starts in the middle between disconfirmed (0) and confirmed (1)
@@ -959,5 +967,9 @@ TUDelft.Gamygdala.Goal = function(name, utility, isMaintenanceGoal){
 		this.isMaintenanceGoal=isMaintenanceGoal; //There are maintenance and achievement goals. When an achievement goal is reached (or not), this is definite (e.g., to a the promotion or not). A maintenance goal can become true/false indefinitely (e.g., to be well-fed)
 	else
 		this.isMaintenanceGoal=false;
+	if (likelyhoodFunction)
+		this.calculateLikelyhood=likelyhoodFunction.bind(this);
+	else
+		this.calculateLikelyhood=false;
 }
 

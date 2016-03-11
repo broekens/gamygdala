@@ -187,6 +187,10 @@ function create() {
 		//add expression to the bad guy so we see something
 		game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, bad_guys.getAt(i), bad_guys.getAt(i).emotionAgent));
 		//note that we don't need to configure goals for these bad guys. They don't need to want to achieve something themselves to have social emotions, they can still feel pity, gloating, etc.. simply due to what happens to the player.
+	
+		tempGoal=new TUDelft.Gamygdala.Goal('chase'+i, 1, true, chasingGoalLikelyhood);
+		bad_guys.getAt(i).emotionAgent.addGoal(tempGoal);
+		emotionEngine.registerGoal(tempGoal);
 	}
 	//Finally we need to tell gamygdala to decay emotional states  over time (you don't stay angry, the intensity should go down right?)
 	//There are three ways to do emotional decay:
@@ -208,7 +212,6 @@ function create() {
 	//How gain works can be seen in the Agent.getEmotionalState();
 	//Normally, you decide the gain for the whole game, but if you know that certain NPC's need a higher or lower one, you can set the gain for each NPC separately using Agent.setGain(gainFactor);
 	emotionEngine.setGain(10);
-	
 	//If you want to enable debug output to the console, than uncomment the next line
 	//emotionEngine.debug=true;
 	
@@ -283,8 +286,9 @@ function update() {
 			bad_guy.body.velocity.y=-speed*3;
 			bad_guy.animations.stop();
 		}
-		
+		bad_guy.emotionAgent.appraiseGoal('chase'+i, null);
 	}
+	
 }
 
 function collectStar (player, star) {
@@ -310,6 +314,7 @@ function collectStar (player, star) {
 		game.paused=true;
 		game.add.text(300, 300, 'YOU WIN :-)', { fontSize: '32px', fill: '#000' });
 	}
+		
 }
 function hit (player, bad_guy) {
     
@@ -344,6 +349,10 @@ function hit (player, bad_guy) {
 	} 
 }
 
+function chasingGoalLikelyhood(bad_guy, player){
+	return 0.5;
+	//return (Math.pow(bad_guy.body.x-player.body.x)+Math.pow(bad_guy.body.y-play.body.y))/Math.sqrt(Math.pow(800, 2)+Math.pow(600, 2));
+}
 </script>
 </body>
 </html>
