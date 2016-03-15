@@ -358,7 +358,7 @@ function hit (player, bad_guy) {
 }
 
 function chasingGoalLikelyhood(bad_guy, player){
-//this is an example function taht calculates the likelyhood that a player chasing gola for a particular bad guy is true. It simply scales the distance you have to the bad guy based on the max distance of the game screen.
+//this is an example function that calculates the likelyhood that a player chasing gola for a particular bad guy is true. It simply scales the distance you have to the bad guy based on the max distance of the game screen.
 //and it returns 1-this scaled distance (high distance means very far from chasing the guy)
 //the trick is that you can bind any function to the Gamygdala.Goal.calculateLikelyhood property, and that will then be used to calculate the likelyhood instead of the belief-based calculation.
 //this allows more sophisticated game AI to be easily coupled to calculation of goal likelyhoods automatically, without the need to explicitly create beliefs for that.
