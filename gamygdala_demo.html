@@ -184,7 +184,7 @@ function create() {
 		bad_guys.getAt(i).emotionAgent=emotionEngine.createAgent('monster'+i);
 		//add a relation between player and monster for fun, the first monster hates the player, the second one likes the player, the third hates, etc..
 		emotionEngine.createRelation('monster'+i, 'player',(i%2)*2-1);
-		//add expression to the bad guy so we see something
+		//add expression to the bad guy so we see something. If you only want to show the expression with the maximum intensity then you need to add ..., true as argument to the constructor GamygdalaExpression
 		game.plugins.add(new Phaser.Plugin.GamygdalaExpression(game, bad_guys.getAt(i), bad_guys.getAt(i).emotionAgent));
 		//note that we don't need to configure goals for these bad guys. They don't need to want to achieve something themselves to have social emotions, they can still feel pity, gloating, etc.. simply due to what happens to the player.
 		
@@ -193,10 +193,10 @@ function create() {
 		//in our case, we define a maintenance goal (because they want to AlLWAYS chase you not just once) for each bad guy that they want to chase the player, so we define a goal called chase+i (+i because you need a unique goal for each agent in this case)
 		//then bind a function that calculates the chse+i goal's likelyhood, in our case this is the function chasingGoalLikelyhood. We need to bind it to the goal (cause it needs to calculate the likelyhood of a particular goal) and to its parameters, in our case to the bad_guy(i) owning the goal and to the player, to be able to calculate the distance between them.
 		//then we add the goal to the bad_guy's goal list and register the goal with gamygdala.
-		//tempGoal=new TUDelft.Gamygdala.Goal('chase'+i, 1, true);
-		//tempGoal.calculateLikelyhood=chasingGoalLikelyhood.bind(tempGoal, bad_guys.getAt(i), player);
-		//bad_guys.getAt(i).emotionAgent.addGoal(tempGoal);
-		//emotionEngine.registerGoal(tempGoal);
+		tempGoal=new TUDelft.Gamygdala.Goal('chase'+i, 1, true);
+		tempGoal.calculateLikelyhood=chasingGoalLikelyhood.bind(tempGoal, bad_guys.getAt(i), player);
+		bad_guys.getAt(i).emotionAgent.addGoal(tempGoal);
+		emotionEngine.registerGoal(tempGoal);
 	}
 	//Finally we need to tell gamygdala to decay emotional states  over time (you don't stay angry, the intensity should go down right?)
 	//There are three ways to do emotional decay:
@@ -358,7 +358,7 @@ function hit (player, bad_guy) {
 }
 
 function chasingGoalLikelyhood(bad_guy, player){
-//this is an example function that calculates the likelyhood that a player chasing gola for a particular bad guy is true. It simply scales the distance you have to the bad guy based on the max distance of the game screen.
+//this is an example function that calculates the likelyhood that a player chasing goal for a particular bad guy is true. It simply scales the distance you have to the bad guy based on the max distance of the game screen.
 //and it returns 1-this scaled distance (high distance means very far from chasing the guy)
 //the trick is that you can bind any function to the Gamygdala.Goal.calculateLikelyhood property, and that will then be used to calculate the likelyhood instead of the belief-based calculation.
 //this allows more sophisticated game AI to be easily coupled to calculation of goal likelyhoods automatically, without the need to explicitly create beliefs for that.
