@@ -311,11 +311,15 @@ class Gamygdala:
         newLikelihood = None
         if goal.isMaintenanceGoal==False and (oldLikelihood>=1 or oldLikelihood<=-1):
             return 0
-        if isIncremental:
-            newLikelihood = oldLikelihood + likelihood*congruence
-            newLikelihood= max(min(newLikelihood,1), -1)
+        
+        if (goal.calculateLikelyhood is not None):
+            newLikelihood = goal.calculateLikelyhood()
         else:
-            newLikelihood = (congruence * likelihood + 1.0)/2.0
+            if isIncremental:
+                newLikelihood = oldLikelihood + likelihood*congruence
+                newLikelihood= max(min(newLikelihood,1), 0)
+            else:
+                newLikelihood = (congruence * likelihood + 1.0)/2.0
         goal.likelihood=newLikelihood
         if oldLikelihood is not None:
             return newLikelihood - oldLikelihood
@@ -394,21 +398,8 @@ class Gamygdala:
             
             if affectedName == selfName and selfName == causalName:
                 #Case two
-                relation = None
-                if self.getAgentByName(causalName).hasRelationWith(affectedName):
-                    relation = self.getAgentByName(causalName).getRelation(affectedName)   
-                    if  desirability >= 0:
-                        if relation.like >= 0:
-                            emotion.name = 'gratification'
-                            emotion.intensity = abs(utility * deltaLikelihood * relation.like)
-                            relation.addEmotion(emotion)
-                            self.getAgentByName(causalName).updateEmotionalState(emotion)  #also add relation emotion the emotion to the emotional state
-                    else:
-                        if relation.like >= 0:
-                            emotion.name = 'remorse'  
-                            emotion.intensity = abs(utility * deltaLikelihood * relation.like)
-                            relation.addEmotion(emotion)
-                            self.getAgentByName(causalName).updateEmotionalState(emotion)  #also add relation emotion the emotion to the emotional state            if affectedName != selfName and causalName == selfName:
+                pass #GAMYDALA DONT SUPPORT AUTORELATION
+            if affectedName != selfName and causalName == selfName:
                 #Case three
                 relation = None
                 if self.getAgentByName(causalName).hasRelationWith(affectedName):
@@ -421,7 +412,7 @@ class Gamygdala:
                             self.getAgentByName(causalName).updateEmotionalState(emotion)  #also add relation emotion the emotion to the emotional state
                     else:
                         if relation.like >= 0:
-                            emotion.name = 'remorse'  
+                            emotion.name = 'remorse'
                             emotion.intensity = abs(utility * deltaLikelihood * relation.like)
                             relation.addEmotion(emotion)
                             self.getAgentByName(causalName).updateEmotionalState(emotion)  #also add relation emotion the emotion to the emotional state

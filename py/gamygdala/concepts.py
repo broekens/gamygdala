@@ -11,6 +11,7 @@ class Goal:
         self.name = name
         self.utility = utility
         self.likelihood = 0.5
+        self.calculateLikelyhood = None
         if isMaintenanceGoal:
             self.maintenanceGoal=isMaintenanceGoal #There are maintenance and achievement goals. When an achievement goal is reached (or not), this is definite (e.g., to a the promotion or not). A maintenance goal can become true/false indefinetly (e.g., to be well-fed)
         else:
