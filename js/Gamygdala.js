@@ -355,7 +355,7 @@ TUDelft.Gamygdala.prototype.calculateDeltaLikelihood = function(goal, congruence
 		//otherwise use the event encoded updates.
 		if (isIncremental){
 			newLikelihood = oldLikelihood + likelihood*congruence;
-			newLikelihood=Math.max(Math.min(newLikelihood,1), -1);
+			newLikelihood=Math.max(Math.min(newLikelihood,1), 0);
 		}
 		else
 			newLikelihood = (congruence * likelihood + 1.0)/2.0;
